@@ -1,0 +1,6 @@
+[06-Aug-2016 20:22:55 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/azinger3/public_html/planner/api/vendor/slim/slim/example/index.php on line 9
+[06-Aug-2016 20:22:55 UTC] PHP Stack trace:
+[06-Aug-2016 20:22:55 UTC] PHP   1. {main}() /home/azinger3/public_html/planner/api/vendor/slim/slim/example/index.php:0
+[06-Aug-2016 20:22:55 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php55/usr/share/pear:/opt/alt/php55/usr/share/php') in /home/azinger3/public_html/planner/api/vendor/slim/slim/example/index.php on line 9
+[06-Aug-2016 20:22:55 UTC] PHP Stack trace:
+[06-Aug-2016 20:22:55 UTC] PHP   1. {main}() /home/azinger3/public_html/planner/api/vendor/slim/slim/example/index.php:0
