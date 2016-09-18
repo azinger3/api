@@ -20,4 +20,4 @@ $app->get('/hello[/{name}]', function ($request, $response, $args) {
 
     return $response;
 
-})->setArgument('name', 'my love!');
+})->setArgument('name', 'pull test!');
