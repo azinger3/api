@@ -20,6 +20,9 @@ class BudgetModel
   private $Amount;
   private $FundID;
   private $Sort;
+  private $Keyword;
+  private $StartDT;
+  private $EndDT;
   private $CreateDT;
   private $CreateBy;
   private $ModifyDT;
