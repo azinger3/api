@@ -19,7 +19,7 @@ BEGIN
     SELECT	BudgetNumber
 			,BudgetMonth
             ,NOW()
-            ,'System'
+            ,'User'
 	FROM DUAL
 	WHERE NOT EXISTS (SELECT Budget.BudgetMonth FROM Budget Budget WHERE TIMESTAMPDIFF(MONTH, Budget.BudgetMonth, BudgetMonth) = 0)
     ;
@@ -43,7 +43,7 @@ BEGIN
             ,BudgetItem.Amount
             ,BudgetItem.Sort
             ,NOW()
-            ,'System'
+            ,'User'
     FROM 	BudgetItem BudgetItem
     WHERE	BudgetItem.BudgetID = BudgetIDPrevious 
     AND 	BudgetIDPrevious IS NOT NULL

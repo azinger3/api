@@ -245,4 +245,154 @@ class BudgetData extends BudgetModel
 			die($exception->getMessage());
 		}
 	}
+
+	public function BudgetInsert()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL BudgetInsert(:BudgetMonth)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':BudgetMonth', $this->BudgetMonth, PDO::PARAM_STR);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Get affected rows
+			$count = $statement->rowCount();
+
+			// Close database resources
+			$database = null;
+
+			// Return affected rows
+			return $count;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
+
+	public function TransactionInsert()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL TransactionInsert(:TransactionTypeID,:TransactionNumber,:TransactionDT,:BudgetID,:BudgetCategoryID,:Amount,:Description,:Note)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':TransactionTypeID', $this->TransactionTypeID, PDO::PARAM_INT);
+			$statement->bindParam(':TransactionNumber', $this->TransactionNumber, PDO::PARAM_STR);
+			$statement->bindParam(':TransactionDT', $this->TransactionDT, PDO::PARAM_STR);
+			$statement->bindParam(':BudgetID', $this->BudgetID, PDO::PARAM_INT);
+			$statement->bindParam(':BudgetCategoryID', $this->BudgetCategoryID, PDO::PARAM_INT);
+			$statement->bindParam(':Amount', $this->Amount, PDO::PARAM_STR);
+			$statement->bindParam(':Description', $this->Description, PDO::PARAM_STR);
+			$statement->bindParam(':Note', $this->Note, PDO::PARAM_STR);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Get affected rows
+			$count = $statement->rowCount();
+
+			// Close database resources
+			$database = null;
+
+			// Return affected rows
+			return $count;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
+
+	public function TransactionUpdate()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL TransactionUpdate(:TransactionID,:TransactionNumber,:TransactionDT,:BudgetID,:BudgetCategoryID,:Amount,:Description,:Note)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':TransactionID', $this->TransactionID, PDO::PARAM_INT);
+			$statement->bindParam(':TransactionNumber', $this->TransactionNumber, PDO::PARAM_STR);
+			$statement->bindParam(':TransactionDT', $this->TransactionDT, PDO::PARAM_STR);
+			$statement->bindParam(':BudgetID', $this->BudgetID, PDO::PARAM_INT);
+			$statement->bindParam(':BudgetCategoryID', $this->BudgetCategoryID, PDO::PARAM_INT);
+			$statement->bindParam(':Amount', $this->Amount, PDO::PARAM_STR);
+			$statement->bindParam(':Description', $this->Description, PDO::PARAM_STR);
+			$statement->bindParam(':Note', $this->Note, PDO::PARAM_STR);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Get affected rows
+			$count = $statement->rowCount();
+
+			// Close database resources
+			$database = null;
+
+			// Return affected rows
+			return $count;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
+
+	public function TransactionDelete()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL TransactionDelete(:TransactionID)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':TransactionID', $this->TransactionID, PDO::PARAM_INT);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Get affected rows
+			$count = $statement->rowCount();
+
+			// Close database resources
+			$database = null;
+
+			// Return affected rows
+			return $count;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
 }

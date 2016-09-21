@@ -23,7 +23,7 @@ BEGIN
 			,Description
             ,Note
             ,NOW()
-            ,'System'
+            ,'User'
     ;
 END$$
 DELIMITER ;

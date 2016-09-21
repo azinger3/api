@@ -2,6 +2,7 @@
 
 class BudgetModel
 {
+  // Budget
   private $BudgetID;
   private $BudgetNumber;
   private $BudgetMonth;
@@ -20,9 +21,18 @@ class BudgetModel
   private $Amount;
   private $FundID;
   private $Sort;
+
+  // Transaction
+  private $TransactionTypeID;
+  private $TransactionNumber;
+  private $TransactionDT;
+
+  // General
   private $Keyword;
   private $StartDT;
   private $EndDT;
+
+  // Audit
   private $CreateDT;
   private $CreateBy;
   private $ModifyDT;

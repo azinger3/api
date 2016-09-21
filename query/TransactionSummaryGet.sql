@@ -187,39 +187,39 @@ BEGIN
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
     
-	SELECT 	tmpTransactionSummary.KeyID,
-			tmpTransactionSummary.SessionID,
-			tmpTransactionSummary.TransactionID,
-			tmpTransactionSummary.TransactionDT,
-			tmpTransactionSummary.TransactionTypeID,
-			tmpTransactionSummary.TransactionType,
-			tmpTransactionSummary.TransactionNumber,
-			tmpTransactionSummary.Description,
-			tmpTransactionSummary.Amount,
-			tmpTransactionSummary.Note,
-			tmpTransactionSummary.BudgetID,
-			tmpTransactionSummary.BudgetGroupID,
-			tmpTransactionSummary.BudgetGroup,
-			tmpTransactionSummary.BudgetCategoryID,
-			tmpTransactionSummary.BudgetCategory,
-			tmpTransactionSummary.HasSpotlight,
-			tmpTransactionSummary.Sort,
-			tmpTransactionSummary.CategoryActual,
-			tmpTransactionSummary.CategoryBudget,
-			tmpTransactionSummary.CategoryActualVsBudget,
-			tmpTransactionSummary.CategoryAverage,
-			tmpTransactionSummary.IncomeActual,
-			tmpTransactionSummary.IncomeBudget,
-			tmpTransactionSummary.IncomeActualVsBudget,
-			tmpTransactionSummary.IncomeAverage,
-			tmpTransactionSummary.ExpenseActual,
-			tmpTransactionSummary.ExpenseBudget,
-			tmpTransactionSummary.ExpenseActualVsBudget,
-			tmpTransactionSummary.ExpenseAverage,
-			tmpTransactionSummary.TotalIncomeVsExpenseActual,
-			tmpTransactionSummary.TotalIncomeVsExpenseBudget,
-			tmpTransactionSummary.TotalIncomeVsExpenseActualVsBudget,
-			tmpTransactionSummary.TotalIncomeVsExpenseAverage
+	SELECT 	tmpTransactionSummary.KeyID 											AS KeyID
+			,tmpTransactionSummary.SessionID 										AS SessionID
+			,tmpTransactionSummary.TransactionID 									AS TransactionID
+			,tmpTransactionSummary.TransactionDT 									AS TransactionDT
+			,tmpTransactionSummary.TransactionTypeID 								AS TransactionTypeID
+			,tmpTransactionSummary.TransactionType 									AS TransactionType
+			,tmpTransactionSummary.TransactionNumber 								AS TransactionNumber
+			,tmpTransactionSummary.Description 										AS Description
+			,tmpTransactionSummary.Amount 											AS Amount
+			,tmpTransactionSummary.Note 											AS Note
+			,tmpTransactionSummary.BudgetID 										AS BudgetID
+			,tmpTransactionSummary.BudgetGroupID 									AS BudgetGroupID
+			,tmpTransactionSummary.BudgetGroup 										AS BudgetGroup
+			,tmpTransactionSummary.BudgetCategoryID 								AS BudgetCategoryID
+			,tmpTransactionSummary.BudgetCategory 									AS BudgetCategory
+			,tmpTransactionSummary.HasSpotlight 									AS HasSpotlight
+			,tmpTransactionSummary.Sort 											AS Sort
+			,IFNULL(tmpTransactionSummary.CategoryActual, 0) 						AS CategoryActual
+			,IFNULL(tmpTransactionSummary.CategoryBudget, 0) 						AS CategoryBudget
+			,IFNULL(tmpTransactionSummary.CategoryActualVsBudget, 0) 				AS CategoryActualVsBudget
+			,IFNULL(tmpTransactionSummary.CategoryAverage, 0) 						AS CategoryAverage
+			,IFNULL(tmpTransactionSummary.IncomeActual, 0) 							AS IncomeActual
+			,IFNULL(tmpTransactionSummary.IncomeBudget, 0) 							AS IncomeBudget
+			,IFNULL(tmpTransactionSummary.IncomeActualVsBudget, 0) 					AS IncomeActualVsBudget
+			,IFNULL(tmpTransactionSummary.IncomeAverage, 0) 						AS IncomeAverage
+			,IFNULL(tmpTransactionSummary.ExpenseActual, 0) 						AS ExpenseActual
+			,IFNULL(tmpTransactionSummary.ExpenseBudget, 0) 						AS ExpenseBudget
+			,IFNULL(tmpTransactionSummary.ExpenseActualVsBudget, 0) 				AS ExpenseActualVsBudget
+			,IFNULL(tmpTransactionSummary.ExpenseAverage, 0) 						AS ExpenseAverage
+			,IFNULL(tmpTransactionSummary.TotalIncomeVsExpenseActual, 0) 			AS TotalIncomeVsExpenseActual
+			,IFNULL(tmpTransactionSummary.TotalIncomeVsExpenseBudget, 0) 			AS TotalIncomeVsExpenseBudget
+			,IFNULL(tmpTransactionSummary.TotalIncomeVsExpenseActualVsBudget, 0)	AS TotalIncomeVsExpenseActualVsBudget
+			,IFNULL(tmpTransactionSummary.TotalIncomeVsExpenseAverage, 0) 			AS TotalIncomeVsExpenseAverage
 	FROM 	tmpTransactionSummary tmpTransactionSummary
     WHERE	tmpTransactionSummary.SessionID = SessionID;
 

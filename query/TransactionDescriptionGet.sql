@@ -1,5 +1,5 @@
 DELIMITER $$
-CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `TransactionDescriptionGet`()
+CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `TransactionDescriptionGet`(Keyword VARCHAR(100))
 BEGIN
 	SET @Description = '';			
 	SET @TransactionDT = '';
@@ -40,16 +40,20 @@ BEGIN
 							,@TransactionID := RSTransaction.TransactionID
 					FROM
 					(
-						SELECT  Description
-								,TransactionDT
-								,TransactionID
-								,Amount
-						FROM    Transaction Transaction
-						ORDER BY Description, TransactionDT DESC,TransactionID DESC
+						SELECT  	Transaction.Description
+									,Transaction.TransactionDT
+									,Transaction.TransactionID
+									,Transaction.Amount
+						FROM    	Transaction Transaction
+						ORDER BY	Transaction.Description
+									,Transaction.TransactionDT DESC
+									,Transaction.TransactionID DESC
 					) RSTransaction
 				) RSRank
 			) RS
-	WHERE RS.RANK = 1
+	WHERE	(RS.Description LIKE CONCAT('%', Keyword, '%') OR Keyword IS NULL)
+    AND		RS.RANK = 1
+    
 	;
 END$$
 DELIMITER ;
