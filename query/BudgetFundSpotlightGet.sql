@@ -1,5 +1,5 @@
 DELIMITER $$
-CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `BudgetFundSpotlightGet`()
+CREATE PROCEDURE `BudgetFundSpotlightGet`()
 BEGIN
 	DECLARE SessionID VARCHAR(100);
 	DECLARE StartDT DATETIME;
@@ -31,7 +31,7 @@ BEGIN
     ON			Fund.FundID = BudgetCategory.FundID
 	WHERE 		BudgetCategory.HasSpotlight = 1
 	;
-    
+
     UPDATE		tmpBudgetFundSpotlight
     INNER JOIN	(
 					SELECT 		Budget.BudgetID	AS BudgetID
@@ -41,15 +41,15 @@ BEGIN
 	SET			tmpBudgetFundSpotlight.BudgetID = RS.BudgetID
 	WHERE 		tmpBudgetFundSpotlight.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpBudgetFundSpotlight
     INNER JOIN	(
 					SELECT 		Transaction.BudgetCategoryID	AS BudgetCategoryID
-								,SUM(Transaction.Amount)		AS FundSpent 
-					FROM 		Transaction Transaction	
+								,SUM(Transaction.Amount)		AS FundSpent
+					FROM 		Transaction Transaction
                     INNER JOIN	tmpBudgetFundSpotlight tmpBudgetFundSpotlight
                     ON			tmpBudgetFundSpotlight.BudgetCategoryID = Transaction.BudgetCategoryID
-                    WHERE		tmpBudgetFundSpotlight.SessionID = SessionID 
+                    WHERE		tmpBudgetFundSpotlight.SessionID = SessionID
                     AND			Transaction.TransactionDT BETWEEN StartDT AND EndDT
                     AND			Transaction.TransactionTypeID = 2
 					GROUP BY	Transaction.BudgetCategoryID
@@ -58,15 +58,15 @@ BEGIN
 	SET			tmpBudgetFundSpotlight.FundSpent = RS.FundSpent
     WHERE 		tmpBudgetFundSpotlight.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpBudgetFundSpotlight
     INNER JOIN	(
 					SELECT 		Transaction.BudgetCategoryID	AS BudgetCategoryID
-								,SUM(Transaction.Amount)		AS FundReceived 
-					FROM 		Transaction Transaction	
+								,SUM(Transaction.Amount)		AS FundReceived
+					FROM 		Transaction Transaction
                     INNER JOIN	tmpBudgetFundSpotlight tmpBudgetFundSpotlight
                     ON			tmpBudgetFundSpotlight.BudgetCategoryID = Transaction.BudgetCategoryID
-                    WHERE		tmpBudgetFundSpotlight.SessionID = SessionID 
+                    WHERE		tmpBudgetFundSpotlight.SessionID = SessionID
                     AND			Transaction.TransactionDT BETWEEN StartDT AND EndDT
                     AND			Transaction.TransactionTypeID = 1
 					GROUP BY	Transaction.BudgetCategoryID
@@ -75,17 +75,17 @@ BEGIN
 	SET			tmpBudgetFundSpotlight.FundReceived = RS.FundReceived
     WHERE 		tmpBudgetFundSpotlight.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpBudgetFundSpotlight
 	SET			tmpBudgetFundSpotlight.FundReceivedPlusStartingBalance = IFNULL(tmpBudgetFundSpotlight.FundReceived, 0) + IFNULL(tmpBudgetFundSpotlight.StartingBalance, 0)
     WHERE 		tmpBudgetFundSpotlight.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpBudgetFundSpotlight
 	SET			tmpBudgetFundSpotlight.FundSpentVsReceived = IFNULL(tmpBudgetFundSpotlight.FundReceivedPlusStartingBalance, 0) - IFNULL(tmpBudgetFundSpotlight.FundSpent, 0)
     WHERE 		tmpBudgetFundSpotlight.SessionID = SessionID
     ;
-    
+
     SELECT 	tmpBudgetFundSpotlight.KeyID 										AS KeyID
 			,tmpBudgetFundSpotlight.SessionID 									AS SessionID
 			,tmpBudgetFundSpotlight.BudgetID 									AS BudgetID
@@ -103,7 +103,7 @@ BEGIN
     WHERE	tmpBudgetFundSpotlight.SessionID = SessionID
     ;
 
-	DELETE FROM	tmpBudgetFundSpotlight 
+	DELETE FROM	tmpBudgetFundSpotlight
 	WHERE		tmpBudgetFundSpotlight.SessionID = SessionID
     ;
 END$$

@@ -1,9 +1,9 @@
 DELIMITER $$
-CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `TransactionSummaryGet`(BudgetCategoryID INT, Keyword VARCHAR(100), StartDT DATETIME, EndDT DATETIME)
+CREATE PROCEDURE `TransactionSummaryGet`(BudgetCategoryID INT, Keyword VARCHAR(100), StartDT DATETIME, EndDT DATETIME)
 BEGIN
 	DECLARE SessionID VARCHAR(100);
 	DECLARE TimeSpanMonth INT;
-    
+
     SET SessionID = UUID();
     SET TimeSpanMonth = TIMESTAMPDIFF(MONTH, StartDT, EndDT);
 
@@ -53,13 +53,13 @@ BEGIN
     AND			(Transaction.Description LIKE CONCAT('%', Keyword, '%') OR Keyword IS NULL)
     AND			(Transaction.BudgetCategoryID = BudgetCategoryID OR BudgetCategoryID IS NULL)
 	;
-	    
+
 	UPDATE		tmpTransactionSummary
     INNER JOIN	(
 					SELECT 		BudgetItem.BudgetCategoryID	AS BudgetCategoryID
-								,SUM(BudgetItem.Amount)		AS CategoryBudget 
+								,SUM(BudgetItem.Amount)		AS CategoryBudget
 					FROM 		BudgetItem BudgetItem
-                    INNER JOIN	tmpTransactionSummary tmpTransactionSummary	
+                    INNER JOIN	tmpTransactionSummary tmpTransactionSummary
                     ON			tmpTransactionSummary.BudgetCategoryID = BudgetItem.BudgetCategoryID
 					AND			tmpTransactionSummary.BudgetID = BudgetItem.BudgetID
                     WHERE		tmpTransactionSummary.SessionID = SessionID
@@ -69,12 +69,12 @@ BEGIN
 	SET			tmpTransactionSummary.CategoryBudget = RS.CategoryBudget
 	WHERE 		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
     UPDATE		tmpTransactionSummary
     INNER JOIN	(
 					SELECT 		tmpTransactionSummary.BudgetCategoryID	AS BudgetCategoryID
-								,SUM(tmpTransactionSummary.Amount)		AS CategoryActual 
-					FROM 		tmpTransactionSummary tmpTransactionSummary	
+								,SUM(tmpTransactionSummary.Amount)		AS CategoryActual
+					FROM 		tmpTransactionSummary tmpTransactionSummary
                     WHERE 		tmpTransactionSummary.SessionID = SessionID
 					GROUP BY	tmpTransactionSummary.BudgetCategoryID
 				) RS
@@ -82,21 +82,21 @@ BEGIN
 	SET			tmpTransactionSummary.CategoryActual = RS.CategoryActual
     WHERE 		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
     UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.CategoryActualVsBudget = tmpTransactionSummary.CategoryBudget - tmpTransactionSummary.CategoryActual
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
     UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.CategoryAverage = tmpTransactionSummary.CategoryActual / TimeSpanMonth
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
     UPDATE		tmpTransactionSummary
     INNER JOIN	(
-					SELECT 		SUM(tmpTransactionSummary.Amount)	AS IncomeActual 
-					FROM 		tmpTransactionSummary tmpTransactionSummary	
+					SELECT 		SUM(tmpTransactionSummary.Amount)	AS IncomeActual
+					FROM 		tmpTransactionSummary tmpTransactionSummary
                     WHERE 		tmpTransactionSummary.SessionID = SessionID
                     AND			tmpTransactionSummary.TransactionTypeID = 1
 					GROUP BY	tmpTransactionSummary.TransactionTypeID
@@ -104,10 +104,10 @@ BEGIN
 	SET			tmpTransactionSummary.IncomeActual = RS.IncomeActual
     WHERE 		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpTransactionSummary
     INNER JOIN	(
-					SELECT 		SUM(rsTransactionSummary.CategoryBudget)	AS IncomeBudget 
+					SELECT 		SUM(rsTransactionSummary.CategoryBudget)	AS IncomeBudget
 					FROM 		(
 									SELECT	DISTINCT
 											tmpTransactionSummary.CategoryBudget	AS CategoryBudget
@@ -119,12 +119,12 @@ BEGIN
 	SET			tmpTransactionSummary.IncomeBudget = RS.IncomeBudget
     WHERE 		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.IncomeActualVsBudget = tmpTransactionSummary.IncomeBudget - tmpTransactionSummary.IncomeActual
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.IncomeAverage = tmpTransactionSummary.IncomeActual / TimeSpanMonth
     WHERE		tmpTransactionSummary.SessionID = SessionID
@@ -132,8 +132,8 @@ BEGIN
 
     UPDATE		tmpTransactionSummary
     INNER JOIN	(
-					SELECT 		SUM(tmpTransactionSummary.Amount)	AS ExpenseActual 
-					FROM 		tmpTransactionSummary tmpTransactionSummary	
+					SELECT 		SUM(tmpTransactionSummary.Amount)	AS ExpenseActual
+					FROM 		tmpTransactionSummary tmpTransactionSummary
                     WHERE 		tmpTransactionSummary.SessionID = SessionID
                     AND			tmpTransactionSummary.TransactionTypeID = 2
 					GROUP BY	tmpTransactionSummary.TransactionTypeID
@@ -141,10 +141,10 @@ BEGIN
 	SET			tmpTransactionSummary.ExpenseActual = RS.ExpenseActual
     WHERE 		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpTransactionSummary
     INNER JOIN	(
-					SELECT 		SUM(rsTransactionSummary.CategoryBudget)	AS ExpenseBudget 
+					SELECT 		SUM(rsTransactionSummary.CategoryBudget)	AS ExpenseBudget
 					FROM 		(
 									SELECT	DISTINCT
 											tmpTransactionSummary.CategoryBudget	AS CategoryBudget
@@ -161,22 +161,22 @@ BEGIN
     SET			tmpTransactionSummary.ExpenseActualVsBudget = tmpTransactionSummary.ExpenseBudget - tmpTransactionSummary.ExpenseActual
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.ExpenseAverage = tmpTransactionSummary.ExpenseActual / TimeSpanMonth
     WHERE		tmpTransactionSummary.SessionID = SessionID
 	;
-    
+
 	UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.TotalIncomeVsExpenseActual = tmpTransactionSummary.IncomeActual - tmpTransactionSummary.ExpenseActual
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.TotalIncomeVsExpenseBudget = tmpTransactionSummary.IncomeBudget - tmpTransactionSummary.ExpenseBudget
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	UPDATE		tmpTransactionSummary
     SET			tmpTransactionSummary.TotalIncomeVsExpenseActualVsBudget = tmpTransactionSummary.TotalIncomeVsExpenseBudget - tmpTransactionSummary.TotalIncomeVsExpenseActual
     WHERE		tmpTransactionSummary.SessionID = SessionID
@@ -186,7 +186,7 @@ BEGIN
     SET			tmpTransactionSummary.TotalIncomeVsExpenseAverage = tmpTransactionSummary.IncomeAverage - tmpTransactionSummary.ExpenseAverage
     WHERE		tmpTransactionSummary.SessionID = SessionID
     ;
-    
+
 	SELECT 	tmpTransactionSummary.KeyID 											AS KeyID
 			,tmpTransactionSummary.SessionID 										AS SessionID
 			,tmpTransactionSummary.TransactionID 									AS TransactionID
@@ -223,10 +223,10 @@ BEGIN
 	FROM 	tmpTransactionSummary tmpTransactionSummary
     WHERE	tmpTransactionSummary.SessionID = SessionID;
 
-	DELETE FROM	tmpTransactionSummary 
+	DELETE FROM	tmpTransactionSummary
     WHERE		tmpTransactionSummary.SessionID = SessionID;
 
 	-- select concat(ifnull(BudgetCategoryID, ''), ' - ',ifnull(Keyword,''), ' - ',StartDT, ' - ',EndDT, ' - ',SessionID, ' - ',TimeSpanMonth);
-    
+
 END$$
 DELIMITER ;

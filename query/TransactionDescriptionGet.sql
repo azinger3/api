@@ -1,7 +1,7 @@
 DELIMITER $$
-CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `TransactionDescriptionGet`(Keyword VARCHAR(100))
+CREATE PROCEDURE `TransactionDescriptionGet`(Keyword VARCHAR(100))
 BEGIN
-	SET @Description = '';			
+	SET @Description = '';
 	SET @TransactionDT = '';
 	SET @TransactionID = '';
 	SET @i = 1;
@@ -23,19 +23,19 @@ BEGIN
 							,RSTransaction.TransactionID
 							,RSTransaction.Amount
 							,@i := IF	(
-											@Description = RSTransaction.Description, 
+											@Description = RSTransaction.Description,
 												IF	(
-														@TransactionDT = RSTransaction.TransactionDT, 
+														@TransactionDT = RSTransaction.TransactionDT,
 															IF	(
-																	@TransactionID = RSTransaction.TransactionID, 
-																		@i, 
+																	@TransactionID = RSTransaction.TransactionID,
+																		@i,
 																	@i + 1 -- ELSE TransactionID
-																), 
+																),
 														@i + 1 -- ELSE TransactionDT
 													),
 											1 -- ELSE Description
 										) AS RANK
-							,@Description := RSTransaction.Description    
+							,@Description := RSTransaction.Description
 							,@TransactionDT := RSTransaction.TransactionDT
 							,@TransactionID := RSTransaction.TransactionID
 					FROM
@@ -53,7 +53,7 @@ BEGIN
 			) RS
 	WHERE	(RS.Description LIKE CONCAT('%', Keyword, '%') OR Keyword IS NULL)
     AND		RS.RANK = 1
-    
+
 	;
 END$$
 DELIMITER ;

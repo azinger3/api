@@ -1,6 +1,6 @@
 DELIMITER $$
-CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `BudgetByMonthGet`(BudgetMonth DATETIME)
-BEGIN    
+CREATE PROCEDURE `BudgetByMonthGet`(BudgetMonth DATETIME)
+BEGIN
 
     DROP TEMPORARY TABLE IF EXISTS tmpBudget;
 

@@ -1,5 +1,5 @@
 DELIMITER $$
-CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `BudgetCategoryGet`()
+CREATE PROCEDURE `BudgetCategoryGet`()
 BEGIN
 	SELECT		BudgetGroup.BudgetGroupID
 				,BudgetGroup.BudgetGroup
