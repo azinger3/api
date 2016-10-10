@@ -291,13 +291,12 @@ class BudgetData extends BudgetModel
 			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			// Build database statement
-			$sql = "CALL TransactionInsert(:TransactionTypeID,:TransactionNumber,:TransactionDT,:BudgetID,:BudgetCategoryID,:Amount,:Description,:Note)";
+			$sql = "CALL TransactionInsert(:TransactionTypeID,:TransactionNumber,:TransactionDT,:BudgetCategoryID,:Amount,:Description,:Note)";
 
 			$statement = $database->prepare($sql);
 			$statement->bindParam(':TransactionTypeID', $this->TransactionTypeID, PDO::PARAM_INT);
 			$statement->bindParam(':TransactionNumber', $this->TransactionNumber, PDO::PARAM_STR);
 			$statement->bindParam(':TransactionDT', $this->TransactionDT, PDO::PARAM_STR);
-			$statement->bindParam(':BudgetID', $this->BudgetID, PDO::PARAM_INT);
 			$statement->bindParam(':BudgetCategoryID', $this->BudgetCategoryID, PDO::PARAM_INT);
 			$statement->bindParam(':Amount', $this->Amount, PDO::PARAM_STR);
 			$statement->bindParam(':Description', $this->Description, PDO::PARAM_STR);

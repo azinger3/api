@@ -111,7 +111,6 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
   $transactionTypeID = $data["TransactionTypeID"];
   $transactionNumber = $data["TransactionNumber"];
   $transactionDT = $data["TransactionDT"];
-  $budgetID = $data["BudgetID"];
   $budgetCategoryID = $data["BudgetCategoryID"];
   $amount = $data["Amount"];
   $description = $data["Description"];
@@ -121,7 +120,6 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
   $BudgetData->TransactionTypeID = $transactionTypeID;
   $BudgetData->TransactionNumber = $transactionNumber;
   $BudgetData->TransactionDT = $transactionDT;
-  $BudgetData->BudgetID = $budgetID;
   $BudgetData->BudgetCategoryID = $budgetCategoryID;
   $BudgetData->Amount = $amount;
   $BudgetData->Description = $description;
