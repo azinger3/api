@@ -66,6 +66,16 @@ $app->get('/budget/transaction/summary', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/transaction/recent', function ($request, $response, $args) {
+
+  $BudgetData = new BudgetData();
+  $result = $BudgetData->TransactionRecentGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/fund/spotlight', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();

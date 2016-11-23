@@ -220,6 +220,7 @@ CREATE TABLE tmpTransactionSummary
   ,Amount								DECIMAL(10, 2)
   ,Note								VARCHAR(1000)
   ,BudgetID							INT(10)
+  ,BudgetTypeID						INT(10)
   ,BudgetGroupID						INT(10)
   ,BudgetGroup						VARCHAR(100)
   ,BudgetCategoryID					INT(10)
@@ -242,6 +243,10 @@ CREATE TABLE tmpTransactionSummary
   ,TotalIncomeVsExpenseBudget			DECIMAL(10, 2)
   ,TotalIncomeVsExpenseActualVsBudget	DECIMAL(10, 2)
   ,TotalIncomeVsExpenseAverage		DECIMAL(10, 2)
+  ,IsTotalIncomeVsExpenseActualNegative INT(1) DEFAULT 0
+  ,IsTotalIncomeVsExpenseBudgetNegative INT(1) DEFAULT 0
+  ,IsTotalIncomeVsExpenseActualVsBudgetNegative INT(1) DEFAULT 0
+  ,IsTotalIncomeVsExpenseAverageNegative INT(1) DEFAULT 0
   ,PRIMARY KEY (`KeyID`)
 );
 
@@ -353,8 +358,8 @@ VALUES
 ,(7, NULL, 'Credit Cards', NULL, '-', 0, 0, 'Red', NOW())
 ,(7, NULL, 'FedLoan', NULL, 'Pay on 25th', 0, 0, 'Red', NOW())
 ,(7, NULL, 'AES', NULL, '-', 0, 0, 'Red', NOW())
-,(8, NULL, 'Atria', NULL, 'Received Bi-weekly', 0, 0, 'Blue', NOW())
-,(8, NULL, 'Vertis', NULL, 'Received Bi-weekly', 0, 0, 'Blue', NOW())
+,(8, NULL, 'Income', NULL, 'Sources of income', 0, 0, 'Blue', NOW())
+,(1, NULL, 'Career', NULL, 'Savings fund, Pay monthly', 0, 0, 'Blue', NOW())
 ;
 
 INSERT INTO Budget
