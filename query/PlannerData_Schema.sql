@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS BudgetType;
 DROP TABLE IF EXISTS BudgetItem;
 DROP TABLE IF EXISTS Budget;
 DROP TABLE IF EXISTS TransactionType;
-DROP TABLE IF EXISTS Transaction;
+-- DROP TABLE IF EXISTS Transaction;
 DROP TABLE IF EXISTS Fund;
 DROP TABLE IF EXISTS FundType;
 DROP TABLE IF EXISTS Todo;
@@ -101,23 +101,23 @@ CREATE TABLE TransactionType (
   ,PRIMARY KEY (`TransactionTypeID`)
 );
 
-CREATE TABLE Transaction (
-  TransactionID INT(10) NOT NULL AUTO_INCREMENT
-  ,TransactionTypeID INT(10)
-  ,TransactionNumber VARCHAR(100)
-  ,TransactionDT DATETIME
-  ,BudgetNumber VARCHAR(100)
-  ,BudgetCategoryID INT(10)
-  ,Amount DECIMAL(10, 4)
-  ,Description VARCHAR(1000)
-  ,Note VARCHAR(1000)
-  ,CreateDT DATETIME
-  ,CreateBy VARCHAR(100)
-  ,ModifyDT DATETIME
-  ,ModifyBy VARCHAR(100)
-  ,ActiveFlg INT(1) DEFAULT 1
-  ,PRIMARY KEY (`TransactionID`)
-);
+-- CREATE TABLE Transaction (
+--   TransactionID INT(10) NOT NULL AUTO_INCREMENT
+--   ,TransactionTypeID INT(10)
+--   ,TransactionNumber VARCHAR(100)
+--   ,TransactionDT DATETIME
+--   ,BudgetNumber VARCHAR(100)
+--   ,BudgetCategoryID INT(10)
+--   ,Amount DECIMAL(10, 4)
+--   ,Description VARCHAR(1000)
+--   ,Note VARCHAR(1000)
+--   ,CreateDT DATETIME
+--   ,CreateBy VARCHAR(100)
+--   ,ModifyDT DATETIME
+--   ,ModifyBy VARCHAR(100)
+--   ,ActiveFlg INT(1) DEFAULT 1
+--   ,PRIMARY KEY (`TransactionID`)
+-- );
 
 CREATE TABLE Fund (
   FundID INT(10) NOT NULL AUTO_INCREMENT
@@ -287,8 +287,8 @@ CREATE TABLE tmpBudgetFundSpotlight
 INSERT INTO BudgetType
 (BudgetType, CreateDT)
 VALUES
-('Receiving', NOW())
-,('Spending', NOW())
+('Income', NOW())
+,('Expense', NOW())
 ;
 
 INSERT INTO TransactionType
