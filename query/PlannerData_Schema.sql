@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS Wish;
 DROP TABLE IF EXISTS Tracker;
 DROP TABLE IF EXISTS TrackerType;
 DROP TABLE IF EXISTS tmpTransactionSummary;
-DROP TABLE IF EXISTS tmpBudgetCategorySpotlight;
+
 DROP TABLE IF EXISTS tmpBudgetFundSpotlight;
 
 
@@ -250,10 +250,13 @@ CREATE TABLE tmpTransactionSummary
   ,PRIMARY KEY (`KeyID`)
 );
 
+DROP TABLE IF EXISTS tmpBudgetCategorySpotlight;
+
 CREATE TABLE tmpBudgetCategorySpotlight
 (
   KeyID								INT(10) NOT NULL AUTO_INCREMENT
   ,SessionID							VARCHAR(100)
+  ,BudgetMonth DATETIME
   ,BudgetNumber VARCHAR(100)
   ,BudgetCategoryID					INT(10)
   ,BudgetCategory						VARCHAR(100)
@@ -261,7 +264,14 @@ CREATE TABLE tmpBudgetCategorySpotlight
   ,CategoryActual						DECIMAL(10, 2)
   ,CategoryBudget						DECIMAL(10, 2)
   ,CategoryActualVsBudget				DECIMAL(10, 2)
-  ,TotalCategoryActualVsBudget  DECIMAL(10, 2)
+  ,CategoryPercentageSpent	DECIMAL(10, 0)
+  ,TotalCategoryActual						DECIMAL(10, 2)
+  ,TotalCategoryBudget						DECIMAL(10, 2)
+  ,TotalCategoryActualVsBudget				DECIMAL(10, 2)
+  ,TotalCategoryPercentageSpent	DECIMAL(10, 0)
+  ,ProgressBarStyle	VARCHAR(100)
+  ,IsNegativeFlg	INT(1) NULL
+  ,IsTotalNegativeFlg	INT(1) NULL
   ,PRIMARY KEY (`KeyID`)
 );
 
