@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS BudgetCategory;
 DROP TABLE IF EXISTS BudgetType;
 DROP TABLE IF EXISTS BudgetItem;
 DROP TABLE IF EXISTS Budget;
-DROP TABLE IF EXISTS TransactionType;
+
 -- DROP TABLE IF EXISTS Transaction;
 DROP TABLE IF EXISTS Fund;
 DROP TABLE IF EXISTS FundType;
@@ -89,6 +89,8 @@ CREATE TABLE Budget (
   ,PRIMARY KEY (`BudgetID`)
 );
 
+DROP TABLE IF EXISTS TransactionType;
+
 CREATE TABLE TransactionType (
   TransactionTypeID INT(10) NOT NULL AUTO_INCREMENT
   ,TransactionType VARCHAR(100)
@@ -100,6 +102,15 @@ CREATE TABLE TransactionType (
   ,ActiveFlg INT(1) DEFAULT 1
   ,PRIMARY KEY (`TransactionTypeID`)
 );
+
+INSERT INTO TransactionType
+(TransactionType, CreateDT)
+VALUES
+('Income', NOW())
+,('Expense', NOW())
+,('Saved', NOW())
+,('Spent', NOW())
+;
 
 -- CREATE TABLE Transaction (
 --   TransactionID INT(10) NOT NULL AUTO_INCREMENT
@@ -300,13 +311,6 @@ INSERT INTO BudgetType
 VALUES
 ('Income', NOW())
 ,('Expense', NOW())
-;
-
-INSERT INTO TransactionType
-(TransactionType, CreateDT)
-VALUES
-('Received', NOW())
-,('Spent', NOW())
 ;
 
 INSERT INTO FundType
