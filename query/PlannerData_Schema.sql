@@ -265,13 +265,14 @@ CREATE TABLE tmpBudgetCategorySpotlight
   ,CategoryBudget						DECIMAL(10, 2)
   ,CategoryActualVsBudget				DECIMAL(10, 2)
   ,CategoryPercentageSpent	DECIMAL(10, 0)
+  ,CategoryProgressBarStyle	VARCHAR(100)
+  ,IsCategoryNegativeFlg	INT(1) NULL
   ,TotalCategoryActual						DECIMAL(10, 2)
   ,TotalCategoryBudget						DECIMAL(10, 2)
   ,TotalCategoryActualVsBudget				DECIMAL(10, 2)
   ,TotalCategoryPercentageSpent	DECIMAL(10, 0)
-  ,ProgressBarStyle	VARCHAR(100)
-  ,IsNegativeFlg	INT(1) NULL
-  ,IsTotalNegativeFlg	INT(1) NULL
+  ,TotalCategoryProgressBarStyle	VARCHAR(100)
+  ,IsTotalCategoryNegativeFlg	INT(1) NULL
   ,PRIMARY KEY (`KeyID`)
 );
 
