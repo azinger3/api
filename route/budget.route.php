@@ -86,6 +86,16 @@ $app->get('/budget/fund/spotlight', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/summary/spotlight', function ($request, $response, $args) {
+
+  $BudgetData = new BudgetData();
+  $result = $BudgetData->BudgetSummarySpotlightGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/{year}/{month}', function ($request, $response, $args) {
 
   $budgetMonth = $args['year'] . "-" . $args['month'] . "-01";

@@ -1,21 +1,18 @@
 USE PlannerData;
 
 DROP TABLE IF EXISTS BudgetGroup;
-DROP TABLE IF EXISTS BudgetCategory;
+
 DROP TABLE IF EXISTS BudgetType;
 DROP TABLE IF EXISTS BudgetItem;
 DROP TABLE IF EXISTS Budget;
 
 -- DROP TABLE IF EXISTS Transaction;
-DROP TABLE IF EXISTS Fund;
-DROP TABLE IF EXISTS FundType;
 DROP TABLE IF EXISTS Todo;
 DROP TABLE IF EXISTS Wish;
 DROP TABLE IF EXISTS Tracker;
 DROP TABLE IF EXISTS TrackerType;
 DROP TABLE IF EXISTS tmpTransactionSummary;
 
-DROP TABLE IF EXISTS tmpBudgetFundSpotlight;
 
 
 
@@ -30,6 +27,8 @@ CREATE TABLE BudgetGroup (
   ,ActiveFlg INT(1) DEFAULT 1
   ,PRIMARY KEY (`BudgetGroupID`)
 );
+
+DROP TABLE IF EXISTS BudgetCategory;
 
 CREATE TABLE BudgetCategory (
   BudgetCategoryID INT(10) NOT NULL AUTO_INCREMENT
@@ -49,6 +48,42 @@ CREATE TABLE BudgetCategory (
   ,ActiveFlg INT(1) DEFAULT 1
   ,PRIMARY KEY (`BudgetCategoryID`)
 );
+
+INSERT INTO BudgetCategory
+(BudgetGroupID, FundID, BudgetCategory, Description, Note, IsEssential, HasSpotlight, ColorHighlight, CreateDT)
+VALUES
+(1, NULL, 'Giving', NULL, 'Pay bi-weekly', 0, 0, 'Red', NOW())
+,(1, NULL, 'Vanguard IRA', NULL, 'Autopayed bi-weekly', 0, 0, 'Red', NOW())
+,(1, 1, 'Emergencies', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
+,(1, 2, 'Car Replacement', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
+,(1, 3, 'Travel', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
+,(1, 4, 'Christmas', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
+,(2, NULL, 'Mortgage', NULL, 'Pay on 1st', 1, 0, 'Red', NOW())
+,(2, NULL, 'Home Owners Fee', NULL, 'Pay on 1st', 1, 0, 'Red', NOW())
+,(2, NULL, 'Home Insurance', NULL, 'Autopayed on 5th', 1, 0, 'Red', NOW())
+,(3, NULL, 'LG&E', NULL, 'Pay on 25th', 1, 0, 'Red', NOW())
+,(3, NULL, 'Phone Cell', NULL, 'Pay on 1st', 1, 0, 'Red', NOW())
+,(3, NULL, 'Internet', NULL, 'Pay on 1st', 0, 0, 'Red', NOW())
+,(3, NULL, 'Hulu Plus', NULL, 'Autopayed on 15th', 0, 0, 'Red', NOW())
+,(3, NULL, 'Netflix', NULL, 'Autopayed on 23rd', 0, 0, 'Red', NOW())
+,(4, NULL, 'Medical', NULL, '-', 0, 0, 'Red', NOW())
+,(4, NULL, 'Grocery', NULL, 'Variable expense, A guideline', 1, 1, 'Red', NOW())
+,(5, NULL, 'Gas', NULL, 'Variable expense, A guideline', 1, 1, 'Red', NOW())
+,(5, NULL, 'Car Insurance', NULL, 'Autopayed on 5th', 1, 0, 'Red', NOW())
+,(5, NULL, 'AAA', NULL, 'Yearly on April 15th (Autopayed)', 0, 0, 'Red', NOW())
+,(5, NULL, 'Car Registration', NULL, 'Yearly on March 25th', 1, 0, 'Red', NOW())
+,(6, NULL, 'Needs', 'Examples include clothes, hygiene, toiletries, home care, cleaning supplies, yard care, pet expenses, school supplies, office supplies, shipping, legal fees, and legal services','Variable expense, A guideline', 1, 1, 'Red', NOW())
+,(6, NULL, 'Wants', 'Examples include nice-to-haves, events, outings, special purchases, projects, fun, breakfast, lunch, and snacks','Variable expense, A guideline', 0, 1, 'Red', NOW())
+,(6, NULL, 'Gifts', NULL, 'Variable expense, A guideline', 0, 1, 'Red', NOW())
+,(6, NULL, 'Eat Out', 'Examples include dinner and desert', 'Variable expense, A guideline', 0, 1, 'Red', NOW())
+,(6, NULL, 'WAM', NULL, 'Cash Withdrawal bi-weekly', 1, 1, 'Red', NOW())
+,(7, NULL, 'Credit Cards', NULL, '-', 0, 0, 'Red', NOW())
+,(7, NULL, 'FedLoan', NULL, 'Pay on 25th', 0, 0, 'Red', NOW())
+,(7, NULL, 'AES', NULL, '-', 0, 0, 'Red', NOW())
+,(8, NULL, 'Income', NULL, 'Sources of income', 0, 0, 'Blue', NOW())
+,(1, NULL, 'Career', NULL, 'Savings fund, Pay monthly', 0, 0, 'Blue', NOW())
+,(1, 5, 'School', NULL, 'Savings fund, Pay monthly', 0, 1, 'Blue', NOW())
+;
 
 CREATE TABLE BudgetType (
   BudgetTypeID INT(10) NOT NULL AUTO_INCREMENT
@@ -130,6 +165,9 @@ VALUES
 --   ,PRIMARY KEY (`TransactionID`)
 -- );
 
+DROP TABLE IF EXISTS Fund;
+DROP TABLE IF EXISTS FundType;
+
 CREATE TABLE Fund (
   FundID INT(10) NOT NULL AUTO_INCREMENT
   ,FundTypeID INT(10)
@@ -157,6 +195,22 @@ CREATE TABLE FundType (
   ,ActiveFlg INT(1) DEFAULT 1
   ,PRIMARY KEY (`FundTypeID`)
 );
+
+INSERT INTO FundType
+(FundType, Note, CreateDT)
+VALUES
+('Savings', 'Savings fund', NOW())
+;
+
+INSERT INTO Fund
+(FundTypeID, FundName, StartingBalance, Note, CreateDT)
+VALUES
+(1,'Emergency Fund',9247.89,'Saving for emergencies',NOW())
+,(1,'Car Replacement Fund',0,'Saving to replace cars',NOW())
+,(1,'Travel Fund',98.93,'Saving for trips',NOW())
+,(1,'Christmas Fund',81.10,'Saving for christmas gifts',NOW())
+,(1,'School Fund',0,'Saving for school',NOW())
+;
 
 CREATE TABLE Todo (
   TodoID INT(10) NOT NULL AUTO_INCREMENT
@@ -287,21 +341,24 @@ CREATE TABLE tmpBudgetCategorySpotlight
   ,PRIMARY KEY (`KeyID`)
 );
 
+
+DROP TABLE IF EXISTS tmpBudgetFundSpotlight;
+
 CREATE TABLE tmpBudgetFundSpotlight
 (
   KeyID								INT(10) NOT NULL AUTO_INCREMENT
   ,SessionID							VARCHAR(100)
-  ,BudgetNumber VARCHAR(100)
+  ,FundID INT(10)
+  ,FundName VARCHAR(100)
   ,BudgetCategoryID					INT(10)
   ,BudgetCategory						VARCHAR(100)
   ,Sort INT(3)
-  ,FundID INT(10)
-  ,FundName VARCHAR(100)
   ,StartingBalance						DECIMAL(10, 2)
   ,FundSpent						DECIMAL(10, 2)
   ,FundReceived						DECIMAL(10, 2)
   ,FundReceivedPlusStartingBalance						DECIMAL(10, 2)
   ,FundSpentVsReceived					DECIMAL(10, 2)
+  ,TotalFundSpentVsReceived					DECIMAL(10, 2)
   ,PRIMARY KEY (`KeyID`)
 );
 
@@ -342,40 +399,7 @@ VALUES
 ,(1,'Gifts Fund',123.4567,'Saving for all other gifts',NOW())
 ;
 
-INSERT INTO BudgetCategory
-(BudgetGroupID, FundID, BudgetCategory, Description, Note, IsEssential, HasSpotlight, ColorHighlight, CreateDT)
-VALUES
-(1, NULL, 'Giving', NULL, 'Pay bi-weekly', 0, 0, 'Red', NOW())
-,(1, NULL, 'Vanguard IRA', NULL, 'Autopayed bi-weekly', 0, 0, 'Red', NOW())
-,(1, 1, 'Emergencies', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
-,(1, 2, 'Car Replacement', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
-,(1, 3, 'Travel', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
-,(1, 4, 'Christmas', NULL, 'Savings fund, Autopayed bi-weekly', 0, 1, 'Red', NOW())
-,(2, NULL, 'Mortgage', NULL, 'Pay on 1st', 1, 0, 'Red', NOW())
-,(2, NULL, 'Home Owners Fee', NULL, 'Pay on 1st', 1, 0, 'Red', NOW())
-,(2, NULL, 'Home Insurance', NULL, 'Autopayed on 5th', 1, 0, 'Red', NOW())
-,(3, NULL, 'LG&E', NULL, 'Pay on 25th', 1, 0, 'Red', NOW())
-,(3, NULL, 'Phone Cell', NULL, 'Pay on 1st', 1, 0, 'Red', NOW())
-,(3, NULL, 'Internet', NULL, 'Pay on 1st', 0, 0, 'Red', NOW())
-,(3, NULL, 'Hulu Plus', NULL, 'Autopayed on 15th', 0, 0, 'Red', NOW())
-,(3, NULL, 'Netflix', NULL, 'Autopayed on 23rd', 0, 0, 'Red', NOW())
-,(4, NULL, 'Medical', NULL, '-', 0, 0, 'Red', NOW())
-,(4, NULL, 'Grocery', NULL, 'Variable expense, A guideline', 1, 1, 'Red', NOW())
-,(5, NULL, 'Gas', NULL, 'Variable expense, A guideline', 1, 1, 'Red', NOW())
-,(5, NULL, 'Car Insurance', NULL, 'Autopayed on 5th', 1, 0, 'Red', NOW())
-,(5, NULL, 'AAA', NULL, 'Yearly on April 15th (Autopayed)', 0, 0, 'Red', NOW())
-,(5, NULL, 'Car Registration', NULL, 'Yearly on March 25th', 1, 0, 'Red', NOW())
-,(6, NULL, 'Needs', 'Examples include clothes, hygiene, toiletries, home care, cleaning supplies, yard care, pet expenses, school supplies, office supplies, shipping, legal fees, and legal services','Variable expense, A guideline', 1, 1, 'Red', NOW())
-,(6, NULL, 'Wants', 'Examples include nice-to-haves, events, outings, special purchases, projects, fun, breakfast, lunch, and snacks','Variable expense, A guideline', 0, 1, 'Red', NOW())
-,(6, NULL, 'Gifts', NULL, 'Variable expense, A guideline', 0, 1, 'Red', NOW())
-,(6, NULL, 'Eat Out', 'Examples include dinner and desert', 'Variable expense, A guideline', 0, 1, 'Red', NOW())
-,(6, NULL, 'WAM', NULL, 'Cash Withdrawal bi-weekly', 1, 1, 'Red', NOW())
-,(7, NULL, 'Credit Cards', NULL, '-', 0, 0, 'Red', NOW())
-,(7, NULL, 'FedLoan', NULL, 'Pay on 25th', 0, 0, 'Red', NOW())
-,(7, NULL, 'AES', NULL, '-', 0, 0, 'Red', NOW())
-,(8, NULL, 'Income', NULL, 'Sources of income', 0, 0, 'Blue', NOW())
-,(1, NULL, 'Career', NULL, 'Savings fund, Pay monthly', 0, 0, 'Blue', NOW())
-;
+
 
 INSERT INTO Todo
 (TaskName, Note, IsComplete)
