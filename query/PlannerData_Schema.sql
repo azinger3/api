@@ -83,6 +83,7 @@ VALUES
 ,(8, NULL, 'Income', NULL, 'Sources of income', 0, 0, 'Blue', NOW())
 ,(1, NULL, 'Career', NULL, 'Savings fund, Pay monthly', 0, 0, 'Blue', NOW())
 ,(1, 5, 'School', NULL, 'Savings fund, Pay monthly', 0, 1, 'Blue', NOW())
+,(1, NULL, 'World Vision', NULL, '', 0, 0, 'Blue', NOW())
 ;
 
 CREATE TABLE BudgetType (
