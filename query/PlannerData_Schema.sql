@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS Todo;
 DROP TABLE IF EXISTS Wish;
 DROP TABLE IF EXISTS Tracker;
 DROP TABLE IF EXISTS TrackerType;
-DROP TABLE IF EXISTS tmpTransactionSummary;
+
 
 
 
@@ -273,7 +273,10 @@ CREATE TABLE TrackerType (
   ,PRIMARY KEY (`TrackerTypeID`)
 );
 
-CREATE TABLE tmpTransactionSummary
+
+DROP TABLE IF EXISTS tmpBudgetSummary;
+
+CREATE TABLE tmpBudgetSummary
 (
   KeyID								INT(10) NOT NULL AUTO_INCREMENT
   ,SessionID							VARCHAR(100)
@@ -291,28 +294,22 @@ CREATE TABLE tmpTransactionSummary
   ,BudgetGroup						VARCHAR(100)
   ,BudgetCategoryID					INT(10)
   ,BudgetCategory						VARCHAR(100)
-  ,HasSpotlight 						INT(1)
   ,Sort 								INT(3)
   ,CategoryActual						DECIMAL(10, 2)
   ,CategoryBudget						DECIMAL(10, 2)
   ,CategoryActualVsBudget				DECIMAL(10, 2)
-  ,CategoryAverage					DECIMAL(10, 2)
   ,IncomeActual						DECIMAL(10, 2)
   ,IncomeBudget						DECIMAL(10, 2)
   ,IncomeActualVsBudget				DECIMAL(10, 2)
-  ,IncomeAverage						DECIMAL(10, 2)
   ,ExpenseActual						DECIMAL(10, 2)
   ,ExpenseBudget						DECIMAL(10, 2)
   ,ExpenseActualVsBudget				DECIMAL(10, 2)
-  ,ExpenseAverage						DECIMAL(10, 2)
   ,TotalIncomeVsExpenseActual			DECIMAL(10, 2)
   ,TotalIncomeVsExpenseBudget			DECIMAL(10, 2)
   ,TotalIncomeVsExpenseActualVsBudget	DECIMAL(10, 2)
-  ,TotalIncomeVsExpenseAverage		DECIMAL(10, 2)
   ,IsTotalIncomeVsExpenseActualNegative INT(1) DEFAULT 0
   ,IsTotalIncomeVsExpenseBudgetNegative INT(1) DEFAULT 0
   ,IsTotalIncomeVsExpenseActualVsBudgetNegative INT(1) DEFAULT 0
-  ,IsTotalIncomeVsExpenseAverageNegative INT(1) DEFAULT 0
   ,PRIMARY KEY (`KeyID`)
 );
 
