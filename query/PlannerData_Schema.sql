@@ -311,6 +311,7 @@ CREATE TABLE tmpBudgetSummary
   ,IsTotalIncomeVsExpenseActualNegative INT(1) NULL
   ,IsTotalIncomeVsExpenseBudgetNegative INT(1) NULL
   ,IsTotalIncomeVsExpenseActualVsBudgetNegative INT(1) NULL
+  ,IsExpenseFlg INT(1) NULL
   ,PRIMARY KEY (`KeyID`)
 );
 
