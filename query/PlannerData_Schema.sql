@@ -307,9 +307,10 @@ CREATE TABLE tmpBudgetSummary
   ,TotalIncomeVsExpenseActual			DECIMAL(10, 2)
   ,TotalIncomeVsExpenseBudget			DECIMAL(10, 2)
   ,TotalIncomeVsExpenseActualVsBudget	DECIMAL(10, 2)
-  ,IsTotalIncomeVsExpenseActualNegative INT(1) DEFAULT 0
-  ,IsTotalIncomeVsExpenseBudgetNegative INT(1) DEFAULT 0
-  ,IsTotalIncomeVsExpenseActualVsBudgetNegative INT(1) DEFAULT 0
+  ,IsCategoryActualVsBudgetNegative INT(1) NULL
+  ,IsTotalIncomeVsExpenseActualNegative INT(1) NULL
+  ,IsTotalIncomeVsExpenseBudgetNegative INT(1) NULL
+  ,IsTotalIncomeVsExpenseActualVsBudgetNegative INT(1) NULL
   ,PRIMARY KEY (`KeyID`)
 );
 

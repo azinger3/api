@@ -96,6 +96,21 @@ $app->get('/budget/summary/spotlight', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/summary', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $budgetMonth = $queryString['BudgetMonth'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetMonth = $budgetMonth;
+  $result = $BudgetData->BudgetSummaryGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/{year}/{month}', function ($request, $response, $args) {
 
   $budgetMonth = $args['year'] . "-" . $args['month'] . "-01";
