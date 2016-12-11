@@ -30,6 +30,8 @@ $app->get('/budget/category/spotlight', function ($request, $response, $args) {
 
 });
 
+
+
 $app->get('/budget/fund/spotlight', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
@@ -86,6 +88,31 @@ $app->get('/budget/year', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
   $result = $BudgetData->BudgetYearGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/transaction/description', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $keyword = $queryString['Keyword'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->Keyword = $keyword;
+  $result = $BudgetData->TransactionDescriptionGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/transaction/recent', function ($request, $response, $args) {
+
+  $BudgetData = new BudgetData();
+  $result = $BudgetData->TransactionRecentGet();
 
   header("Content-Type: application/json");
   return json_encode($result, JSON_PRETTY_PRINT);
