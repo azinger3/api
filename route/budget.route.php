@@ -10,6 +10,19 @@ $app->get('/budget', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/{year}/{month}', function ($request, $response, $args) {
+
+  $budgetMonth = $args['year'] . "-" . $args['month'] . "-01";
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetMonth = $budgetMonth;
+  $result = $BudgetData->BudgetByMonthGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/category', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
@@ -30,30 +43,7 @@ $app->get('/budget/category/spotlight', function ($request, $response, $args) {
 
 });
 
-$app->get('/budget/transaction/description', function ($request, $response, $args) {
 
-  $queryString = $request->getQueryParams();
-
-  $keyword = $queryString['Keyword'];
-
-  $BudgetData = new BudgetData();
-  $BudgetData->Keyword = $keyword;
-  $result = $BudgetData->TransactionDescriptionGet();
-
-  header("Content-Type: application/json");
-  return json_encode($result, JSON_PRETTY_PRINT);
-
-});
-
-$app->get('/budget/transaction/recent', function ($request, $response, $args) {
-
-  $BudgetData = new BudgetData();
-  $result = $BudgetData->TransactionRecentGet();
-
-  header("Content-Type: application/json");
-  return json_encode($result, JSON_PRETTY_PRINT);
-
-});
 
 $app->get('/budget/fund/spotlight', function ($request, $response, $args) {
 
@@ -117,13 +107,25 @@ $app->get('/budget/year', function ($request, $response, $args) {
 
 });
 
-$app->get('/budget/{year}/{month}', function ($request, $response, $args) {
+$app->get('/budget/transaction/description', function ($request, $response, $args) {
 
-  $budgetMonth = $args['year'] . "-" . $args['month'] . "-01";
+  $queryString = $request->getQueryParams();
+
+  $keyword = $queryString['Keyword'];
 
   $BudgetData = new BudgetData();
-  $BudgetData->BudgetMonth = $budgetMonth;
-  $result = $BudgetData->BudgetByMonthGet();
+  $BudgetData->Keyword = $keyword;
+  $result = $BudgetData->TransactionDescriptionGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/transaction/recent', function ($request, $response, $args) {
+
+  $BudgetData = new BudgetData();
+  $result = $BudgetData->TransactionRecentGet();
 
   header("Content-Type: application/json");
   return json_encode($result, JSON_PRETTY_PRINT);
