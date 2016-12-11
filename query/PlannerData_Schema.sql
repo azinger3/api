@@ -315,6 +315,41 @@ CREATE TABLE tmpBudgetSummary
   ,PRIMARY KEY (`KeyID`)
 );
 
+
+DROP TABLE IF EXISTS tmpBudgetAverage;
+
+CREATE TABLE tmpBudgetAverage
+(
+  KeyID								INT(10) NOT NULL AUTO_INCREMENT
+  ,SessionID							VARCHAR(100)
+  ,TransactionID						INT(10)
+  ,TransactionDT						DATETIME
+  ,TransactionTypeID					INT(10)
+  ,TransactionType					VARCHAR(100)
+  ,TransactionNumber					VARCHAR(100)
+  ,Description						VARCHAR(1000)
+  ,Amount								DECIMAL(10, 2)
+  ,Note								VARCHAR(1000)
+  ,BudgetNumber							VARCHAR(100)
+  ,BudgetTypeID						INT(10)
+  ,BudgetGroupID						INT(10)
+  ,BudgetGroup						VARCHAR(100)
+  ,BudgetCategoryID					INT(10)
+  ,BudgetCategory						VARCHAR(100)
+  ,Sort 								INT(3)
+  ,CategoryActual						DECIMAL(10, 2)
+  ,CategoryAverage						DECIMAL(10, 2)
+  ,IncomeActual						DECIMAL(10, 2)
+  ,IncomeAverage						DECIMAL(10, 2)
+  ,ExpenseActual						DECIMAL(10, 2)
+  ,ExpenseAverage						DECIMAL(10, 2)
+  ,TotalIncomeVsExpenseActual			DECIMAL(10, 2)
+  ,TotalIncomeVsExpenseAverage			DECIMAL(10, 2)
+  ,IsExpenseFlg INT(1) NULL
+  ,PRIMARY KEY (`KeyID`)
+);
+
+
 DROP TABLE IF EXISTS tmpBudgetCategorySpotlight;
 
 CREATE TABLE tmpBudgetCategorySpotlight
