@@ -1,6 +1,5 @@
-DELIMITER $$
-CREATE PROCEDURE `BudgetByMonthGet`(BudgetMonth DATETIME)
-BEGIN
+CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `BudgetByMonthGet`(BudgetMonth DATETIME)
+BEGIN    
 
     DROP TEMPORARY TABLE IF EXISTS tmpBudget;
 
@@ -86,7 +85,7 @@ BEGIN
 				,BudgetItem.Amount AS AmountMonthly
 	FROM        Budget Budget
 	INNER JOIN  BudgetItem BudgetItem
-	ON          Budget.BudgetID = BudgetItem.BudgetID
+	ON          Budget.BudgetNumber = BudgetItem.BudgetNumber
 	INNER JOIN  BudgetType BudgetType
 	ON          BudgetType.BudgetTypeID = BudgetItem.BudgetTypeID
 	INNER JOIN  BudgetCategory BudgetCategory
@@ -109,7 +108,7 @@ BEGIN
 							  ,BudgetItem.Amount * 12 AS AmountYearly
 				  FROM        Budget Budget
 				  INNER JOIN  BudgetItem BudgetItem
-				  ON          Budget.BudgetID = BudgetItem.BudgetID
+				  ON          Budget.BudgetNumber = BudgetItem.BudgetNumber
 				  WHERE       TIMESTAMPDIFF(MONTH, Budget.BudgetMonth, BudgetMonth) = 0
 				) RS
 	ON          tmpBudget.BudgetItemID = RS.BudgetItemID
@@ -126,7 +125,7 @@ BEGIN
 	SET         TotalIncomeMonthly = (
 										SELECT      SUM(Amount) AS IncomeTotal
 										FROM        Budget
-										INNER JOIN  BudgetItem BudgetItem ON Budget.BudgetID = BudgetItem.BudgetID
+										INNER JOIN  BudgetItem BudgetItem ON Budget.BudgetNumber = BudgetItem.BudgetNumber
 										WHERE       BudgetTypeID = 1
 										AND         TIMESTAMPDIFF(MONTH, Budget.BudgetMonth, BudgetMonth) = 0
 										);
@@ -146,7 +145,7 @@ BEGIN
 	SET         TotalExpenseMonthly = (
 										SELECT      SUM(Amount) AS ExpenseTotal
 										FROM        Budget
-										INNER JOIN  BudgetItem BudgetItem ON Budget.BudgetID = BudgetItem.BudgetID
+										INNER JOIN  BudgetItem BudgetItem ON Budget.BudgetNumber = BudgetItem.BudgetNumber
 										WHERE       BudgetTypeID = 2
 										AND         TIMESTAMPDIFF(MONTH, Budget.BudgetMonth, BudgetMonth) = 0
 										);
@@ -214,5 +213,4 @@ BEGIN
 			,BalanceYearly
 	FROM 	tmpBudget;
 
-END$$
-DELIMITER ;
+END

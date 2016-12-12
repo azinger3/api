@@ -1,4 +1,3 @@
-DELIMITER $$
 CREATE PROCEDURE `BudgetCategoryGet`()
 BEGIN
 	SELECT		BudgetGroup.BudgetGroupID
@@ -10,6 +9,7 @@ BEGIN
     ON			BudgetCategory.BudgetGroupID = BudgetGroup.BudgetGroupID
     WHERE		BudgetGroup.ActiveFlg = 1
     AND			BudgetCategory.ActiveFlg = 1
+    AND			BudgetCategory.BudgetCategory <> 'Income'
+    ORDER BY	BudgetCategory.BudgetCategory ASC
     ;
-END$$
-DELIMITER ;
+END

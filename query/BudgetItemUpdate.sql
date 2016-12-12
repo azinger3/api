@@ -1,4 +1,3 @@
-DELIMITER $$
 CREATE PROCEDURE `BudgetItemUpdate`(BudgetItemID INT, Amount DECIMAL(10, 4))
 BEGIN
 	UPDATE	BudgetItem BudgetItem
@@ -7,5 +6,4 @@ BEGIN
             ,BudgetItem.ModifyBy 	= 'User'
     WHERE 	BudgetItem.BudgetItemID = BudgetItemID
     ;
-END$$
-DELIMITER ;
+END

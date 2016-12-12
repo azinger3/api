@@ -1,4 +1,3 @@
-DELIMITER $$
 CREATE PROCEDURE `BudgetItemInsert`(BudgetID INT, BudgetCategoryID INT, BudgetTypeID INT, Amount DECIMAL(10, 4))
 BEGIN
 	INSERT INTO BudgetItem
@@ -17,5 +16,4 @@ BEGIN
             ,NOW()
             ,'System'
 	;
-END$$
-DELIMITER ;
+END

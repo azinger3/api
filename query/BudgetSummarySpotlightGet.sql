@@ -1,4 +1,4 @@
-CREATE DEFINER=`PlannerSysAdmin`@`74.130.35.209` PROCEDURE `BudgetGet`()
+CREATE PROCEDURE `BudgetSummarySpotlightGet`()
 BEGIN
 	SELECT 		Budget.BudgetID
 				,Budget.BudgetNumber
@@ -11,6 +11,7 @@ BEGIN
 				,Budget.ModifyBy
 				,Budget.ActiveFlg
 	FROM 		Budget Budget
+	WHERE		TIMESTAMPDIFF(MONTH, Budget.BudgetMonth, NOW()) <= 12
 	ORDER BY	Budget.BudgetMonth DESC
 	;
 END

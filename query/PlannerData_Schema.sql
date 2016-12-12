@@ -345,6 +345,8 @@ CREATE TABLE tmpBudgetAverage
   ,ExpenseAverage						DECIMAL(10, 2)
   ,TotalIncomeVsExpenseActual			DECIMAL(10, 2)
   ,TotalIncomeVsExpenseAverage			DECIMAL(10, 2)
+  ,IsTotalIncomeVsExpenseActualNegative INT(1) NULL
+  ,IsTotalIncomeVsExpenseAverageNegative INT(1) NULL
   ,IsExpenseFlg INT(1) NULL
   ,PRIMARY KEY (`KeyID`)
 );
