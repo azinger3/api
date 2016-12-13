@@ -52,7 +52,7 @@ BEGIN
     SELECT		tmpBudgetYear.KeyID 		AS KeyID
 				,tmpBudgetYear.StartDT 		AS StartDT
 				,tmpBudgetYear.EndDT 		AS EndDT
-				,CONCAT(tmpBudgetYear.YearName, ' (', DateMask(tmpBudgetYear.StartDT), ' - ', DateMask(tmpBudgetYear.EndDT), ')') AS YearName
+				,CONCAT(DateMask(tmpBudgetYear.StartDT), ' - ', DateMask(tmpBudgetYear.EndDT)) AS YearName
                 ,tmpBudgetYear.YearValue	AS YearValue
     FROM 		tmpBudgetYear tmpBudgetYear
     ORDER BY	tmpBudgetYear.YearName DESC
