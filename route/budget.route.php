@@ -84,6 +84,23 @@ $app->get('/budget/average', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/breakdown', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $startDT = $queryString['StartDT'];
+  $endDT = $queryString['EndDT'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->StartDT = $startDT;
+  $BudgetData->EndDT = $endDT;
+  $result = $BudgetData->BudgetBreakdownGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/year', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
