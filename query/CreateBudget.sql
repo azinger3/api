@@ -1,11 +1,11 @@
 USE PlannerData;
 
-set @BudgetMonth = '2017-01-01';
+set @BudgetMonth = '2017-02-01';
 
 INSERT INTO Budget
 (BudgetNumber, BudgetMonth, CreateDT)
 VALUES
-(201701, @BudgetMonth, NOW())
+(201702, @BudgetMonth, NOW())
 ;
     
 SET @BudgetIDNew = EXTRACT(YEAR_MONTH FROM @BudgetMonth);
@@ -13,20 +13,20 @@ SET @BudgetIDNew = EXTRACT(YEAR_MONTH FROM @BudgetMonth);
 INSERT INTO BudgetItem
 (BudgetNumber, BudgetCategoryID, BudgetTypeID, Amount, CreateDT)
 VALUES
-(@BudgetIDNew, 29, 1, 6855.00, NOW()) -- Income
-,(@BudgetIDNew, 1, 2, 686.00, NOW()) -- Giving
+(@BudgetIDNew, 29, 1, 7152.00, NOW()) -- Income
+,(@BudgetIDNew, 1, 2, 715.00, NOW()) -- Giving
 ,(@BudgetIDNew, 2, 2, 86.00, NOW()) -- Vanguard Roth IRA
 ,(@BudgetIDNew, 3, 2, 0.00, NOW()) -- Emergencies
-,(@BudgetIDNew, 4, 2, 2784.00, NOW()) -- Car Replacement
+,(@BudgetIDNew, 4, 2, 3018.00, NOW()) -- Car Replacement
 ,(@BudgetIDNew, 5, 2, 0.00, NOW()) -- Travel
 ,(@BudgetIDNew, 6, 2, 0.00, NOW()) -- Christmas
 ,(@BudgetIDNew, 30, 2, 0.00, NOW()) -- Career
 -- ,(@BudgetIDNew, 31, 2, 0.00, NOW()) -- School
 ,(@BudgetIDNew, 7, 2, 713.00, NOW()) -- Mortgage
 ,(@BudgetIDNew, 8, 2, 131.00, NOW()) -- Home Owners Fee
-,(@BudgetIDNew, 9, 2, 24.00, NOW()) -- Home Insurance
+,(@BudgetIDNew, 9, 2, 22.00, NOW()) -- Home Insurance
 ,(@BudgetIDNew, 10, 2, 90.00, NOW()) -- LG&E
-,(@BudgetIDNew, 11, 2, 220.00, NOW()) -- Cell Phone
+,(@BudgetIDNew, 11, 2, 230.00, NOW()) -- Cell Phone
 ,(@BudgetIDNew, 12, 2, 70.00, NOW()) -- Internet
 ,(@BudgetIDNew, 13, 2, 8.00, NOW()) -- Hulu Plus
 ,(@BudgetIDNew, 14, 2, 10.00, NOW()) -- Netflix
