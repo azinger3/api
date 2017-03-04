@@ -1,11 +1,11 @@
 USE PlannerData;
 
-set @BudgetMonth = '2017-02-01';
+set @BudgetMonth = '2017-03-01';
 
 INSERT INTO Budget
 (BudgetNumber, BudgetMonth, CreateDT)
 VALUES
-(201702, @BudgetMonth, NOW())
+(201703, @BudgetMonth, NOW())
 ;
     
 SET @BudgetIDNew = EXTRACT(YEAR_MONTH FROM @BudgetMonth);
@@ -13,11 +13,11 @@ SET @BudgetIDNew = EXTRACT(YEAR_MONTH FROM @BudgetMonth);
 INSERT INTO BudgetItem
 (BudgetNumber, BudgetCategoryID, BudgetTypeID, Amount, CreateDT)
 VALUES
-(@BudgetIDNew, 29, 1, 7152.00, NOW()) -- Income
-,(@BudgetIDNew, 1, 2, 715.00, NOW()) -- Giving
+(@BudgetIDNew, 29, 1, 7176.00, NOW()) -- Income
+,(@BudgetIDNew, 1, 2, 718.00, NOW()) -- Giving
 ,(@BudgetIDNew, 2, 2, 86.00, NOW()) -- Vanguard Roth IRA
 ,(@BudgetIDNew, 3, 2, 0.00, NOW()) -- Emergencies
-,(@BudgetIDNew, 4, 2, 3018.00, NOW()) -- Car Replacement
+,(@BudgetIDNew, 4, 2, 2934.00, NOW()) -- Car Replacement
 ,(@BudgetIDNew, 5, 2, 0.00, NOW()) -- Travel
 ,(@BudgetIDNew, 6, 2, 0.00, NOW()) -- Christmas
 ,(@BudgetIDNew, 30, 2, 0.00, NOW()) -- Career
@@ -32,7 +32,7 @@ VALUES
 ,(@BudgetIDNew, 14, 2, 10.00, NOW()) -- Netflix
 ,(@BudgetIDNew, 15, 2, 0.00, NOW()) -- Medical
 ,(@BudgetIDNew, 16, 2, 320.00, NOW()) -- Grocery
-,(@BudgetIDNew, 17, 2, 240.00, NOW()) -- Gas
+,(@BudgetIDNew, 17, 2, 220.00, NOW()) -- Gas
 ,(@BudgetIDNew, 18, 2, 157.00, NOW()) -- Car Insurance
 ,(@BudgetIDNew, 19, 2, 10.00, NOW()) -- AAA
 ,(@BudgetIDNew, 20, 2, 12.00, NOW()) -- Car Registration
@@ -40,7 +40,8 @@ VALUES
 ,(@BudgetIDNew, 22, 2, 340.00, NOW()) -- Wants
 ,(@BudgetIDNew, 23, 2, 100.00, NOW()) -- Gifts
 ,(@BudgetIDNew, 24, 2, 230.00, NOW()) -- Eat Out
-,(@BudgetIDNew, 25, 2, 174.00, NOW()) -- WAM
+,(@BudgetIDNew, 25, 2, 200.00, NOW()) -- WAM
+,(@BudgetIDNew, 33, 2, 125.00, NOW()) -- Storage Unit
 -- ,(@BudgetIDNew, 32, 2, 0.00, NOW()) -- World Vision
 ;
 
