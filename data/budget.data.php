@@ -36,7 +36,7 @@ class BudgetData extends BudgetModel
 		}
 	}
 
-	public function BudgetByMonthGet()
+	public function BudgetByMonthValidate()
 	{
 		try
 		{
@@ -47,7 +47,77 @@ class BudgetData extends BudgetModel
 			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			// Build database statement
-			$sql = "CALL BudgetByMonthGet(:budgetMonth)";
+			$sql = "CALL BudgetByMonthValidate(:BudgetMonth)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':BudgetMonth', $this->BudgetMonth, PDO::PARAM_STR);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Fetch results from cursor
+			$statement->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+			$result = $statement->fetchAll();
+
+			// Close database resources
+			$database = null;
+
+			// Return results
+			return $result;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
+
+	public function BudgetExpenseByMonthGet()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL BudgetExpenseByMonthGet(:budgetMonth)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':budgetMonth', $this->BudgetMonth, PDO::PARAM_STR);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Fetch results from cursor
+			$statement->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+			$result = $statement->fetchAll();
+
+			// Close database resources
+			$database = null;
+
+			// Return results
+			return $result;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
+
+	public function BudgetIncomeByMonthGet()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL BudgetIncomeByMonthGet(:budgetMonth)";
 
 			$statement = $database->prepare($sql);
 			$statement->bindParam(':budgetMonth', $this->BudgetMonth, PDO::PARAM_STR);
@@ -417,7 +487,7 @@ class BudgetData extends BudgetModel
 		}
 	}
 
-	public function BudgetInsert()
+	public function BudgetByMonthInsert()
 	{
 		try
 		{
@@ -428,7 +498,7 @@ class BudgetData extends BudgetModel
 			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			// Build database statement
-			$sql = "CALL BudgetInsert(:BudgetMonth)";
+			$sql = "CALL BudgetByMonthInsert(:BudgetMonth)";
 
 			$statement = $database->prepare($sql);
 			$statement->bindParam(':BudgetMonth', $this->BudgetMonth, PDO::PARAM_STR);
@@ -547,6 +617,40 @@ class BudgetData extends BudgetModel
 
 			$statement = $database->prepare($sql);
 			$statement->bindParam(':TransactionID', $this->TransactionID, PDO::PARAM_INT);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Get affected rows
+			$count = $statement->rowCount();
+
+			// Close database resources
+			$database = null;
+
+			// Return affected rows
+			return $count;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
+
+	public function BudgetByMonthDelete()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL BudgetByMonthDelete(:BudgetID)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':BudgetID', $this->BudgetID, PDO::PARAM_INT);
 
 			// Execute database statement
 			$statement->execute();

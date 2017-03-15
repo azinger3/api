@@ -10,6 +10,51 @@ $app->get('/budget', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/validate', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $budgetMonth = $queryString['BudgetMonth'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetMonth = $budgetMonth;
+  $result = $BudgetData->BudgetByMonthValidate();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/expense', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $budgetMonth = $queryString['BudgetMonth'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetMonth = $budgetMonth;
+  $result = $BudgetData->BudgetExpenseByMonthGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/income', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $budgetMonth = $queryString['BudgetMonth'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetMonth = $budgetMonth;
+  $result = $BudgetData->BudgetIncomeByMonthGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/category', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
@@ -29,8 +74,6 @@ $app->get('/budget/category/spotlight', function ($request, $response, $args) {
   return json_encode($result, JSON_PRETTY_PRINT);
 
 });
-
-
 
 $app->get('/budget/fund/spotlight', function ($request, $response, $args) {
 
@@ -136,19 +179,6 @@ $app->get('/budget/transaction/recent', function ($request, $response, $args) {
 
 });
 
-$app->get('/budget/{year}/{month}', function ($request, $response, $args) {
-
-  $budgetMonth = $args['year'] . "-" . $args['month'] . "-01";
-
-  $BudgetData = new BudgetData();
-  $BudgetData->BudgetMonth = $budgetMonth;
-  $result = $BudgetData->BudgetByMonthGet();
-
-  header("Content-Type: application/json");
-  return json_encode($result, JSON_PRETTY_PRINT);
-
-});
-
 $app->post('/budget', function ($request, $response, $args) {
 
   $data = $request->getParsedBody();
@@ -157,7 +187,7 @@ $app->post('/budget', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
   $BudgetData->BudgetMonth = $budgetMonth;
-  $result = $BudgetData->BudgetInsert();
+  $result = $BudgetData->BudgetByMonthInsert();
 
   header("Content-Type: application/json");
   return json_encode($result, JSON_PRETTY_PRINT);
@@ -228,6 +258,19 @@ $app->delete('/budget/transaction/{transactionid}', function ($request, $respons
   $BudgetData = new BudgetData();
   $BudgetData->TransactionID = $transactionID;
   $result = $BudgetData->TransactionDelete();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->delete('/budget/{budgetid}', function ($request, $response, $args) {
+
+  $budgetID = $args["budgetid"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetID = $budgetID;
+  $result = $BudgetData->BudgetByMonthDelete();
 
   header("Content-Type: application/json");
   return json_encode($result, JSON_PRETTY_PRINT);
