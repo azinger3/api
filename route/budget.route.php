@@ -449,3 +449,16 @@ $app->delete('/budget/income/{budgetincomeid}', function ($request, $response, $
   return json_encode($result, JSON_PRETTY_PRINT);
 
 });
+
+$app->delete('/budget/expense/{budgetitemid}', function ($request, $response, $args) {
+
+  $budgetItemID = $args["budgetitemid"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetItemID = $budgetItemID;
+  $result = $BudgetData->BudgetExpenseDelete();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});

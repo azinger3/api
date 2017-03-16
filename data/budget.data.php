@@ -977,4 +977,38 @@ class BudgetData extends BudgetModel
 			die($exception->getMessage());
 		}
 	}
+
+	public function BudgetExpenseDelete()
+	{
+		try
+		{
+			// Open database connection
+			$database = new Database();
+
+			// Set the error reporting attribute
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			// Build database statement
+			$sql = "CALL BudgetExpenseDelete(:BudgetItemID)";
+
+			$statement = $database->prepare($sql);
+			$statement->bindParam(':BudgetItemID', $this->BudgetItemID, PDO::PARAM_INT);
+
+			// Execute database statement
+			$statement->execute();
+
+			// Get affected rows
+			$count = $statement->rowCount();
+
+			// Close database resources
+			$database = null;
+
+			// Return affected rows
+			return $count;
+		}
+		catch (PDOException $exception)
+		{
+			die($exception->getMessage());
+		}
+	}
 }
