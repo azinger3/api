@@ -55,6 +55,42 @@ $app->get('/budget/income', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/income/{budgetincomeid}', function ($request, $response, $args) {
+
+  $budgetIncomeID = $args["budgetincomeid"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetIncomeID = $budgetIncomeID;
+  $result = $BudgetData->BudgetIncomeDetailGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/expense/{budgetitemid}', function ($request, $response, $args) {
+
+  $budgetItemID = $args["budgetitemid"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetItemID = $budgetItemID;
+  $result = $BudgetData->BudgetExpenseDetailGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/group', function ($request, $response, $args) {
+
+  $BudgetData = new BudgetData();
+  $result = $BudgetData->BudgetGroupGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/category', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
@@ -69,6 +105,16 @@ $app->get('/budget/category/spotlight', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
   $result = $BudgetData->BudgetCategorySpotlightGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->get('/budget/fund', function ($request, $response, $args) {
+
+  $BudgetData = new BudgetData();
+  $result = $BudgetData->BudgetFundGet();
 
   header("Content-Type: application/json");
   return json_encode($result, JSON_PRETTY_PRINT);
@@ -194,6 +240,39 @@ $app->post('/budget', function ($request, $response, $args) {
 
 });
 
+$app->post('/budget/income', function ($request, $response, $args) {
+
+  $data = $request->getParsedBody();
+
+  $budgetNumber = $data["BudgetNumber"];
+  $incomeTypeID = $data["IncomeTypeID"];
+  $incomeType = $data["IncomeType"];
+  $payCycleID = $data["PayCycleID"];
+  $payCycle = $data["PayCycle"];
+  $takeHomePay = $data["TakeHomePay"];
+  $hourlyRate = $data["HourlyRate"];
+  $plannedHours = $data["PlannedHours"];
+  $salary = $data["Salary"];
+  $yearDeduct = $data["YearDeduct"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetNumber = $budgetNumber;
+  $BudgetData->IncomeTypeID = $incomeTypeID;
+  $BudgetData->IncomeType = $incomeType;
+  $BudgetData->PayCycleID = $payCycleID;
+  $BudgetData->PayCycle = $payCycle;
+  $BudgetData->TakeHomePay = $takeHomePay;
+  $BudgetData->HourlyRate = $hourlyRate;
+  $BudgetData->PlannedHours = $plannedHours;
+  $BudgetData->Salary = $salary;
+  $BudgetData->YearDeduct = $yearDeduct;
+  $result = $BudgetData->BudgetIncomeInsert();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->post('/budget/transaction', function ($request, $response, $args) {
 
   $data = $request->getParsedBody();
@@ -251,6 +330,87 @@ $app->put('/budget/transaction/{transactionid}', function ($request, $response, 
 
 });
 
+$app->put('/budget/income/{budgetincomeid}', function ($request, $response, $args) {
+
+  $budgetIncomeID = $args["budgetincomeid"];
+
+  $data = $request->getParsedBody();
+
+  $budgetNumber = $data["BudgetNumber"];
+  $incomeTypeID = $data["IncomeTypeID"];
+  $incomeType = $data["IncomeType"];
+  $payCycleID = $data["PayCycleID"];
+  $payCycle = $data["PayCycle"];
+  $takeHomePay = $data["TakeHomePay"];
+  $hourlyRate = $data["HourlyRate"];
+  $plannedHours = $data["PlannedHours"];
+  $salary = $data["Salary"];
+  $yearDeduct = $data["YearDeduct"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetIncomeID = $budgetIncomeID;
+  $BudgetData->BudgetNumber = $budgetNumber;
+  $BudgetData->IncomeTypeID = $incomeTypeID;
+  $BudgetData->IncomeType = $incomeType;
+  $BudgetData->PayCycleID = $payCycleID;
+  $BudgetData->PayCycle = $payCycle;
+  $BudgetData->TakeHomePay = $takeHomePay;
+  $BudgetData->HourlyRate = $hourlyRate;
+  $BudgetData->PlannedHours = $plannedHours;
+  $BudgetData->Salary = $salary;
+  $BudgetData->YearDeduct = $yearDeduct;
+  $result = $BudgetData->BudgetIncomeUpdate();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->put('/budget/expense', function ($request, $response, $args) {
+  
+  $data = $request->getParsedBody();
+
+  $budgetItemID = $data["BudgetItemID"];
+  $budgetNumber = $data["BudgetNumber"];
+  $amount = $data["Amount"];
+  $budgetGroupID = $data["BudgetGroupID"];
+  $budgetGroup = $data["BudgetGroup"];
+  $budgetCategoryID = $data["BudgetCategoryID"];
+  $budgetCategory = $data["BudgetCategory"];
+  $description = $data["Description"];
+  $note = $data["Note"];
+  $isEssential = $data["IsEssential"];
+  $hasSpotlight = $data["HasSpotlight"];
+  $colorHighlight = $data["ColorHighlight"];
+  $hasFundFlg = $data["HasFundFlg"];
+  $fundID = $data["FundID"];
+  $fundName = $data["FundName"];
+  $startingBalance = $data["StartingBalance"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetItemID = $budgetItemID;
+  $BudgetData->BudgetNumber = $budgetNumber;
+  $BudgetData->Amount = $amount;
+  $BudgetData->BudgetGroupID = $budgetGroupID;
+  $BudgetData->BudgetGroup = $budgetGroup;
+  $BudgetData->BudgetCategoryID = $budgetCategoryID;
+  $BudgetData->BudgetCategory = $budgetCategory;
+  $BudgetData->Description = $description;
+  $BudgetData->Note = $note;
+  $BudgetData->IsEssential = $isEssential;
+  $BudgetData->HasSpotlight = $hasSpotlight;
+  $BudgetData->ColorHighlight = $colorHighlight;
+  $BudgetData->HasFundFlg = $hasFundFlg;
+  $BudgetData->FundID = $fundID;
+  $BudgetData->FundName = $fundName;
+  $BudgetData->StartingBalance = $startingBalance;
+  $result = $BudgetData->BudgetExpenseUpdate();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->delete('/budget/transaction/{transactionid}', function ($request, $response, $args) {
 
   $transactionID = $args["transactionid"];
@@ -271,6 +431,19 @@ $app->delete('/budget/{budgetid}', function ($request, $response, $args) {
   $BudgetData = new BudgetData();
   $BudgetData->BudgetID = $budgetID;
   $result = $BudgetData->BudgetByMonthDelete();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
+$app->delete('/budget/income/{budgetincomeid}', function ($request, $response, $args) {
+
+  $budgetIncomeID = $args["budgetincomeid"];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->BudgetIncomeID = $budgetIncomeID;
+  $result = $BudgetData->BudgetIncomeDelete();
 
   header("Content-Type: application/json");
   return json_encode($result, JSON_PRETTY_PRINT);

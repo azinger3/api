@@ -22,6 +22,23 @@ class BudgetModel
   private $FundID;
   private $Sort;
 
+  // Budget Income
+  private $BudgetIncomeID;
+  private $IncomeTypeID;
+  private $IncomeType;
+  private $PayCycleID;
+  private $PayCycle;
+  private $TakeHomePay;
+  private $HourlyRate;
+  private $PlannedHours;
+  private $Salary;
+  private $YearDeduct;
+
+  // Budget Expense
+  private $HasFundFlg;
+  private $FundName;
+  private $StartingBalance;
+
   // Transaction
   private $TransactionTypeID;
   private $TransactionNumber;
