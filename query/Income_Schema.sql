@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS BudgetIncome;
 CREATE TABLE BudgetIncome (
   BudgetIncomeID INT(10) NOT NULL AUTO_INCREMENT
   ,BudgetNumber VARCHAR(100)
+  ,IncomeName VARCHAR(100)
   ,IncomeTypeID INT(10)
   ,IncomeType VARCHAR(100)
   ,PayCycleID INT(10)
@@ -27,6 +28,7 @@ CREATE TABLE BudgetIncome (
 INSERT INTO `PlannerData`.`BudgetIncome`
 (
 `BudgetNumber`,
+`IncomeName`,
 `IncomeTypeID`,
 `IncomeType`,
 `PayCycleID`,
@@ -42,6 +44,7 @@ INSERT INTO `PlannerData`.`BudgetIncome`
 VALUES
 (
 '201703',
+'Atria Senior Living',
 1,
 'Salary',
 1,
@@ -50,12 +53,13 @@ VALUES
 40.88,
 40,
 85035,
-33.10,
+33.16,
 NOW(),
 'User'
 ),
 (
 '201703',
+'Vertis Therapy',
 2,
 'Hourly',
 1,
