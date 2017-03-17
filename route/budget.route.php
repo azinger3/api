@@ -234,10 +234,8 @@ $app->post('/budget', function ($request, $response, $args) {
   $BudgetData = new BudgetData();
   $BudgetData->BudgetMonth = $budgetMonth;
   $result = $BudgetData->BudgetByMonthInsert();
-
   header("Content-Type: application/json");
   return json_encode($result, JSON_PRETTY_PRINT);
-
 });
 
 $app->post('/budget/income', function ($request, $response, $args) {
@@ -424,12 +422,12 @@ $app->delete('/budget/transaction/{transactionid}', function ($request, $respons
 
 });
 
-$app->delete('/budget/{budgetid}', function ($request, $response, $args) {
+$app->delete('/budget/{budgetnumber}', function ($request, $response, $args) {
 
-  $budgetID = $args["budgetid"];
+  $budgetNumber = $args["budgetnumber"];
 
   $BudgetData = new BudgetData();
-  $BudgetData->BudgetID = $budgetID;
+  $BudgetData->BudgetNumber = $budgetNumber;
   $result = $BudgetData->BudgetByMonthDelete();
 
   header("Content-Type: application/json");

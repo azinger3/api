@@ -921,10 +921,10 @@ class BudgetData extends BudgetModel
 			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			// Build database statement
-			$sql = "CALL BudgetByMonthDelete(:BudgetID)";
+			$sql = "CALL BudgetByMonthDelete(:BudgetNumber)";
 
 			$statement = $database->prepare($sql);
-			$statement->bindParam(':BudgetID', $this->BudgetID, PDO::PARAM_INT);
+			$statement->bindParam(':BudgetNumber', $this->BudgetNumber, PDO::PARAM_INT);
 
 			// Execute database statement
 			$statement->execute();
