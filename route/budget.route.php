@@ -116,6 +116,21 @@ $app->get('/budget/category', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/category/description', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $keyword = $queryString['Keyword'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->Keyword = $keyword;
+  $result = $BudgetData->BudgetCategoryByKeywordGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/category/spotlight', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
