@@ -670,10 +670,11 @@ class BudgetData extends BudgetModel
 			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			// Build database statement
-			$sql = "CALL BudgetIncomeInsert(:BudgetNumber,:IncomeTypeID,:IncomeType,:PayCycleID,:PayCycle,:TakeHomePay,:HourlyRate,:PlannedHours,:Salary,:YearDeduct)";
+			$sql = "CALL BudgetIncomeInsert(:BudgetNumber,:IncomeName,:IncomeTypeID,:IncomeType,:PayCycleID,:PayCycle,:TakeHomePay,:HourlyRate,:PlannedHours,:Salary,:YearDeduct)";
 
 			$statement = $database->prepare($sql);
 			$statement->bindParam(':BudgetNumber', $this->BudgetNumber, PDO::PARAM_INT);
+			$statement->bindParam(':IncomeName', $this->IncomeName, PDO::PARAM_STR);
 			$statement->bindParam(':IncomeTypeID', $this->IncomeTypeID, PDO::PARAM_INT);
 			$statement->bindParam(':IncomeType', $this->IncomeType, PDO::PARAM_STR);
 			$statement->bindParam(':PayCycleID', $this->PayCycleID, PDO::PARAM_INT);

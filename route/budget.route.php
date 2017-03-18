@@ -243,6 +243,7 @@ $app->post('/budget/income', function ($request, $response, $args) {
   $data = $request->getParsedBody();
 
   $budgetNumber = $data["BudgetNumber"];
+  $incomeName = $data["IncomeName"];
   $incomeTypeID = $data["IncomeTypeID"];
   $incomeType = $data["IncomeType"];
   $payCycleID = $data["PayCycleID"];
@@ -255,6 +256,7 @@ $app->post('/budget/income', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
   $BudgetData->BudgetNumber = $budgetNumber;
+  $BudgetData->IncomeName = $incomeName;
   $BudgetData->IncomeTypeID = $incomeTypeID;
   $BudgetData->IncomeType = $incomeType;
   $BudgetData->PayCycleID = $payCycleID;
