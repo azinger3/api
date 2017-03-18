@@ -335,6 +335,7 @@ $app->put('/budget/income/{budgetincomeid}', function ($request, $response, $arg
   $data = $request->getParsedBody();
 
   $budgetNumber = $data["BudgetNumber"];
+  $incomeName = $data["IncomeName"];
   $incomeTypeID = $data["IncomeTypeID"];
   $incomeType = $data["IncomeType"];
   $payCycleID = $data["PayCycleID"];
@@ -348,6 +349,7 @@ $app->put('/budget/income/{budgetincomeid}', function ($request, $response, $arg
   $BudgetData = new BudgetData();
   $BudgetData->BudgetIncomeID = $budgetIncomeID;
   $BudgetData->BudgetNumber = $budgetNumber;
+  $BudgetData->IncomeName = $incomeName;
   $BudgetData->IncomeTypeID = $incomeTypeID;
   $BudgetData->IncomeType = $incomeType;
   $BudgetData->PayCycleID = $payCycleID;

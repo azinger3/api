@@ -24,6 +24,7 @@ class BudgetModel
 
   // Budget Income
   private $BudgetIncomeID;
+  private $IncomeName;
   private $IncomeTypeID;
   private $IncomeType;
   private $PayCycleID;
