@@ -151,6 +151,21 @@ $app->get('/budget/fund', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/fund/description', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $keyword = $queryString['Keyword'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->Keyword = $keyword;
+  $result = $BudgetData->BudgetFundByKeywordGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/fund/spotlight', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
