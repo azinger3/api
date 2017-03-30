@@ -547,7 +547,7 @@ CREATE TABLE `tmpBudgetBreakdown` (
   `CategoryExpenseTotal` decimal(10,2) DEFAULT NULL,
   `CategoryPercentage` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`KeyID`)
-) ENGINE=MyISAM AUTO_INCREMENT=14642 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=14672 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -587,7 +587,7 @@ CREATE TABLE `tmpBudgetCategorySpotlight` (
   `TotalCategoryProgressBarStyle` varchar(100) DEFAULT NULL,
   `IsTotalCategoryNegativeFlg` int(1) DEFAULT NULL,
   PRIMARY KEY (`KeyID`)
-) ENGINE=MyISAM AUTO_INCREMENT=15909 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15916 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -621,7 +621,7 @@ CREATE TABLE `tmpBudgetFundSpotlight` (
   `FundSpentVsReceived` decimal(10,2) DEFAULT NULL,
   `TotalFundSpentVsReceived` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`KeyID`)
-) ENGINE=MyISAM AUTO_INCREMENT=9462 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9467 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1344,17 +1344,19 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=` `@` ` PROCEDURE `BudgetCategorySpotlightGet`()
 BEGIN
 	DECLARE SessionID VARCHAR(100);
 	DECLARE StartDT DATETIME;
 	DECLARE EndDT DATETIME;
+    DECLARE BudgetNumber INT(10);
 
 	SET SessionID = UUID();
 	SET StartDT = CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') AS DATE);
 	SET EndDT = LAST_DAY(NOW());
+    SET BudgetNumber = EXTRACT(YEAR_MONTH FROM StartDT);
 
 	INSERT INTO tmpBudgetCategorySpotlight
 	(
@@ -1363,13 +1365,16 @@ BEGIN
 		,BudgetCategory
 		,Sort
 	)
-	SELECT 	SessionID							AS SessionID
-			,BudgetCategory.BudgetCategoryID	AS BudgetCategoryID
-			,BudgetCategory.BudgetCategory		AS BudgetCategory
-			,BudgetCategory.Sort				AS Sort
-	FROM 	BudgetCategory BudgetCategory
-	WHERE 	BudgetCategory.HasSpotlight = 1 
-	AND 	BudgetCategory.FundID IS NULL
+	SELECT 		SessionID							AS SessionID
+				,BudgetCategory.BudgetCategoryID	AS BudgetCategoryID
+				,BudgetCategory.BudgetCategory		AS BudgetCategory
+				,BudgetCategory.Sort				AS Sort
+	FROM 		BudgetCategory BudgetCategory
+    INNER JOIN	BudgetItem	BudgetItem
+    ON			BudgetItem.BudgetCategoryID = BudgetCategory.BudgetCategoryID
+	WHERE 		BudgetCategory.HasSpotlight = 1 
+	AND 		BudgetCategory.FundID IS NULL
+    AND			BudgetItem.BudgetNumber = BudgetNumber
 	;
 	
 	UPDATE		tmpBudgetCategorySpotlight
@@ -1377,7 +1382,7 @@ BEGIN
 					SELECT 		Budget.BudgetNumber	AS BudgetNumber
 								,Budget.BudgetMonth	AS BudgetMonth
 					FROM 		Budget Budget
-                    WHERE		TIMESTAMPDIFF(MONTH, Budget.BudgetMonth, StartDT) = 0
+                    WHERE		Budget.BudgetNumber = BudgetNumber
 				) RS
 	SET			tmpBudgetCategorySpotlight.BudgetNumber = RS.BudgetNumber
 				,tmpBudgetCategorySpotlight.BudgetMonth = RS.BudgetMonth
@@ -1524,7 +1529,7 @@ BEGIN
 	SELECT		KeyID										AS KeyID
 				,SessionID									AS SessionID
 				,DATE_FORMAT(NOW(),'%M %e, %Y')				AS BudgetMonth
-				,BudgetNumber								AS BudgetNumber
+				,tmpBudgetCategorySpotlight.BudgetNumber	AS BudgetNumber
 				,BudgetCategoryID							AS BudgetCategoryID
 				,BudgetCategory								AS BudgetCategory
 				,Sort										AS Sort
@@ -3700,4 +3705,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-29 23:15:25
+-- Dump completed on 2017-03-29 23:29:11
