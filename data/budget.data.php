@@ -945,7 +945,7 @@ class BudgetData extends BudgetModel
 			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			// Build database statement
-			$sql = "CALL BudgetExpenseUpdate(:BudgetItemID,:BudgetNumber,:Amount,:BudgetGroupID,:BudgetGroup,:BudgetCategoryID,:BudgetCategory,:Description,:Note,:IsEssential,:HasSpotlight,:ColorHighlight,:HasFundFlg,:FundID,:FundName,:StartingBalance)";
+			$sql = "CALL BudgetExpenseUpdate(:BudgetItemID,:BudgetNumber,:Amount,:BudgetGroupID,:BudgetGroup,:BudgetCategoryID,:BudgetCategory,:Description,:Note,:IsEssential,:HasSpotlight,:HasFundFlg,:FundID,:FundName,:StartingBalance)";
 
 			$statement = $database->prepare($sql);
 			$statement->bindParam(':BudgetItemID', $this->BudgetItemID, PDO::PARAM_INT);
@@ -959,7 +959,6 @@ class BudgetData extends BudgetModel
 			$statement->bindParam(':Note', $this->Note, PDO::PARAM_STR);
 			$statement->bindParam(':IsEssential', $this->IsEssential, PDO::PARAM_STR);
 			$statement->bindParam(':HasSpotlight', $this->HasSpotlight, PDO::PARAM_STR);
-			$statement->bindParam(':ColorHighlight', $this->ColorHighlight, PDO::PARAM_STR);
 			$statement->bindParam(':HasFundFlg', $this->HasFundFlg, PDO::PARAM_STR);
 			$statement->bindParam(':FundID', $this->FundID, PDO::PARAM_INT);
 			$statement->bindParam(':FundName', $this->FundName, PDO::PARAM_STR);

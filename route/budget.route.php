@@ -428,7 +428,6 @@ $app->put('/budget/expense', function ($request, $response, $args) {
   $note = $data["Note"];
   $isEssential = $data["IsEssential"];
   $hasSpotlight = $data["HasSpotlight"];
-  $colorHighlight = $data["ColorHighlight"];
   $hasFundFlg = $data["HasFundFlg"];
   $fundID = $data["FundID"];
   $fundName = $data["FundName"];
@@ -446,7 +445,6 @@ $app->put('/budget/expense', function ($request, $response, $args) {
   $BudgetData->Note = $note;
   $BudgetData->IsEssential = $isEssential;
   $BudgetData->HasSpotlight = $hasSpotlight;
-  $BudgetData->ColorHighlight = $colorHighlight;
   $BudgetData->HasFundFlg = $hasFundFlg;
   $BudgetData->FundID = $fundID;
   $BudgetData->FundName = $fundName;
