@@ -176,6 +176,21 @@ $app->get('/budget/fund/spotlight', function ($request, $response, $args) {
 
 });
 
+$app->get('/budget/fund/summary', function ($request, $response, $args) {
+
+  $queryString = $request->getQueryParams();
+
+  $fundID = $queryString['FundID'];
+
+  $BudgetData = new BudgetData();
+  $BudgetData->FundID = $fundID;
+  $result = $BudgetData->BudgetFundSummaryGet();
+
+  header("Content-Type: application/json");
+  return json_encode($result, JSON_PRETTY_PRINT);
+
+});
+
 $app->get('/budget/summary/spotlight', function ($request, $response, $args) {
 
   $BudgetData = new BudgetData();
