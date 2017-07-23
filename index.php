@@ -15,7 +15,7 @@ $app->add(function ($req, $res, $next) {
     return $response
             ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 });
 
 require 'route/index.route.php';
@@ -23,5 +23,6 @@ require 'route/budget.route.php';
 require 'route/todo.route.php';
 require 'route/tracker.route.php';
 require 'route/wish.route.php';
+require 'route/log.route.php';
 
 $app->run();
