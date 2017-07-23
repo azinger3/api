@@ -42,7 +42,7 @@ $app->post('/application/log', function ($request, $response, $args) {
     $phpSelf = $data["PHPSelf"];
     $queryString = $data["QueryString"];
 
-    if ($data["ScriptURI"] != "/application/log")
+    if ($scriptURI != "/application/log")
     {
         $LogData = new LogData();
         $LogData->ApplicationID = $applicationID;

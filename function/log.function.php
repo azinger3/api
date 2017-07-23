@@ -1,6 +1,6 @@
 <?php
 
-if($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {		
+if($_SERVER['REQUEST_METHOD'] != 'OPTIONS' && $_SERVER['REQUEST_URI'] != "/application/log") {
     $LogData = new LogData();
 
     $LogData->ApplicationID = "1";
