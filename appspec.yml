@@ -6,7 +6,6 @@ files:
 permissions:
   - object: /scripts
     pattern: "**"
-    owner: ec2-user
     mode: 777
     type:
       - file
