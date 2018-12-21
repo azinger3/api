@@ -3,3 +3,7 @@ os: linux
 files:
   - source: /
     destination: /var/www/html/api/
+hooks:
+   AfterInstall:
+     - location: scripts/remove_files
+       timeout: 300
