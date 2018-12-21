@@ -7,3 +7,4 @@ hooks:
    AfterInstall:
      - location: scripts/remove_files
        timeout: 300
+       runas: root
