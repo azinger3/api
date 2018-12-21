@@ -1,4 +1,0 @@
-#!/bin/bash
-sudo rm -rfv README.md
-sudo rm -rfv query
-sudo rm -rfv .gitignore

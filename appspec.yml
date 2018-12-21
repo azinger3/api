@@ -3,14 +3,3 @@ os: linux
 files:
   - source: /
     destination: /var/www/html/api/
-permissions:
-  - object: /scripts
-    pattern: "**"
-    mode: 777
-    type:
-      - file
-hooks:
-   AfterInstall:
-     - location: scripts/remove_files
-       timeout: 300
-       runas: root
