@@ -20,4 +20,4 @@ $app->get('/hello[/{name}]', function ($request, $response, $args) {
 
     return $response;
 
-})->setArgument('name', 'everyone! github works! ready to develop!');
+})->setArgument('name', 'everyone! aws works! ready to develop!');
