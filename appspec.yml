@@ -3,3 +3,8 @@ os: linux
 files:
   - source: /
     destination: /var/www/html/api/
+hooks:
+  BeforeInstall:
+    - location: scripts/clean_directory
+      timeout: 300
+      runas: root
