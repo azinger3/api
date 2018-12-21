@@ -3,6 +3,13 @@ os: linux
 files:
   - source: /
     destination: /var/www/html/api/
+permissions:
+  - object: /scripts
+    pattern: "**"
+    owner: ec2-user
+    mode: 777
+    type:
+      - file
 hooks:
    AfterInstall:
      - location: scripts/remove_files
