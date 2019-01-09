@@ -1,0 +1,41 @@
+<?php
+
+// General
+date_default_timezone_set('EST');
+setlocale(LC_MONETARY, 'en_US');
+
+// Database connection
+defined('DATABASE_HOST') ? NULL : define('DATABASE_HOST', '*****');
+defined('DATABASE_NAME') ? NULL : define('DATABASE_NAME', '*****');
+defined('DATABASE_USER') ? NULL : define('DATABASE_USER', '*****');
+defined('DATABASE_PASSWORD') ? NULL : define('DATABASE_PASSWORD', '*****');
+
+// Use PHP's directory separator for windows/unix compatibility
+defined('DS') ? NULL : define('DS', DIRECTORY_SEPARATOR);
+
+// Define absolute path to server root
+defined('SITE_ROOT') ? NULL : define('SITE_ROOT', dirname(dirname(__FILE__)).DS);
+
+// Define absolute path to includes
+defined('CONFIG_PATH') ? NULL : define('CONFIG_PATH', SITE_ROOT.'config'.DS);
+defined('FUNCTION_PATH') ? NULL : define('FUNCTION_PATH', SITE_ROOT.'function'.DS);
+defined('MODEL_PATH') ? NULL : define('MODEL_PATH', SITE_ROOT.'model'.DS);
+defined('DATA_PATH') ? NULL : define('DATA_PATH', SITE_ROOT.'data'.DS);
+
+// Database config
+require_once(CONFIG_PATH.'database.config.php');
+
+// Models
+require_once(MODEL_PATH.'budget.model.php');
+require_once(MODEL_PATH.'log.model.php');
+
+// Data access
+require_once(DATA_PATH.'budget.data.php');
+require_once(DATA_PATH.'todo.data.php');
+require_once(DATA_PATH.'tracker.data.php');
+require_once(DATA_PATH.'wish.data.php');
+require_once(DATA_PATH.'log.data.php');
+
+// Functions
+require_once(FUNCTION_PATH.'app.function.php');
+require_once(FUNCTION_PATH.'log.function.php');
