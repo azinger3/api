@@ -8,7 +8,7 @@ $app->get('/', function ($request, $response, $args) {
       array("wish" => array("url" => "http://api.jordanandrobert.com/wish")),
     );
 
-    $Arr = array("_endpoints_deploy7" => $Endpoint);
+    $Arr = array("_endpoints" => $Endpoint);
 
     header("Content-Type: application/json");
     return "<pre style='word-wrap: break-word; white-space: pre-wrap;'>" . json_encode($Arr, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "</pre>";
