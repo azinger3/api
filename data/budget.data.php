@@ -499,6 +499,28 @@ class BudgetData extends BudgetModel
 		}
 	}
 
+	public function TransactionLeaderboardGet()
+	{
+		try {
+			$database = new Database();
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$statement = $database->prepare("CALL TransactionLeaderboardGet(:EffectiveDT)");
+			$statement->bindParam(':EffectiveDT', $this->EffectiveDT, PDO::PARAM_STR);
+
+			$statement->execute();
+			$statement->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+
+			$result = $statement->fetchAll();
+
+			$database = null;
+
+			return $result;
+		} catch (PDOException $exception) {
+			die($exception->getMessage());
+		}
+	}
+
 	public function BudgetByMonthInsert()
 	{
 		try {

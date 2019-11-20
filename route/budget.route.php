@@ -277,6 +277,20 @@ $app->get('/budget/transaction/spotlight', function ($request, $response, $args)
 });
 
 
+$app->get('/budget/transaction/leaderboard', function ($request, $response, $args) {
+	$queryString = $request->getQueryParams();
+
+	$effectiveDT = $queryString['EffectiveDT'];
+
+	$BudgetData = new BudgetData();
+	$BudgetData->EffectiveDT = $effectiveDT;
+	$result = $BudgetData->TransactionLeaderboardGet();
+
+	header("Content-Type: application/json");
+	return json_encode($result, JSON_PRETTY_PRINT);
+});
+
+
 $app->post('/budget', function ($request, $response, $args) {
 	$data = $request->getParsedBody();
 
