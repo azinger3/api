@@ -60,7 +60,7 @@ $app->get('/status', function ($request, $response, $args) {
 
 
 $app->get('/hello[/{name}]', function ($request, $response, $args) {
-	$response->write("Hello World");
+	$response->write("Hello, " . $args["name"]);
 
 	return $response;
 })->setArgument('name', 'everyone! aws works! ready to develop!');
