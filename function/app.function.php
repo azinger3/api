@@ -9,3 +9,16 @@ function redirect_to($url) {
 function sanitize_output($string) {
 	return htmlspecialchars($string);
 }
+
+function database_alias($host) {
+	$result = "";
+	$url = explode(".", $host);
+
+	if (strpos($url[0], 'dev') !== false) {
+		$result = "jordanandrobert-dev";
+	} else {
+		$result = "jordanandrobert-prod";
+	}
+
+	return $result;
+}
