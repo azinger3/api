@@ -4,6 +4,7 @@
 
 # Spin up a PHP web server on a project directory
 
+# Console Logging
 # error_log(print_r('endDT', true));
 
 php -S localhost:8081;

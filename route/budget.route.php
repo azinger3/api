@@ -364,7 +364,7 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
 });
 
 
-$app->post('/budget/average/monthly/snapshot', function ($request, $response, $args) {
+$app->post('/budget/average/snapshot', function ($request, $response, $args) {
 	$queryString = $request->getQueryParams();
 
 	$startDT = $queryString['StartDT'];
@@ -382,6 +382,67 @@ $app->post('/budget/average/monthly/snapshot', function ($request, $response, $a
 
 	header("Content-Type: application/json");
 	return json_encode($result, JSON_PRETTY_PRINT);
+});
+
+
+$app->post('/budget/average/snapshot/refresh', function ($request, $response, $args) {
+	// $queryString = $request->getQueryParams();
+
+	// $startDT = $queryString['StartDT'];
+	// $endDT = $queryString['EndDT'];
+
+	// if (is_null($startDT)) {
+	//$startDT = year_begin_get(date("Y-m-01"));
+	
+	// }
+
+	//$startDT->add(new DateInterval('P1M'));
+	//echo $date->format('Y-m-d');
+
+	$baseDT = '2016-04-01';
+	$basePartDT = explode('-', $baseDT);
+	$baseYear = $basePartDT[0];
+	$baseMonth = $basePartDT[1];
+
+	$currentDT = date('Y-m-01', strtotime("+1 month", strtotime(date("Y-m-01"))));
+	$currentPartDT = explode('-', $currentDT);
+	$currentYear = $currentPartDT[0];
+	$currentMonth = $currentPartDT[1];
+
+	$maxMonths = 12;
+	$maxYears = ($currentYear - $baseYear);
+
+	error_log(print_r('baseDT', true));
+	error_log(print_r($baseDT, true));
+
+	error_log(print_r('baseYear', true));
+	error_log(print_r($baseYear, true));
+
+	error_log(print_r('baseMonth', true));
+	error_log(print_r($baseMonth, true));
+
+	error_log(print_r('currentDT', true));
+	error_log(print_r($currentDT, true));
+
+	error_log(print_r('currentYear', true));
+	error_log(print_r($currentYear, true));
+
+	error_log(print_r('currentMonth', true));
+	error_log(print_r($currentMonth, true));
+
+	error_log(print_r('maxMonths', true));
+	error_log(print_r($maxMonths, true));
+
+	error_log(print_r('maxYears', true));
+	error_log(print_r($maxYears, true));
+
+	// $BudgetData = new BudgetData();
+	// $BudgetData->StartDT = $startDT;
+	// $BudgetData->EndDT = $endDT;
+	// $result = $BudgetData->BudgetAverageMonthlySnapshotGenerate();
+
+	header("Content-Type: application/json");
+	return json_encode('', JSON_PRETTY_PRINT);
 });
 
 
