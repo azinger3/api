@@ -436,6 +436,16 @@ $app->post('/budget/average/snapshot/refresh', function ($request, $response, $a
 	error_log(print_r('maxYears', true));
 	error_log(print_r($maxYears, true));
 
+	for ($i = 1; $i <= $maxYears; $i++) {
+		// magic
+		error_log(print_r('year '.$i, true));
+
+		for ($j = 1; $j <= $maxMonths; $j++) {
+			// magic
+			error_log(print_r('month '.$j, true));
+		}
+	}
+
 	// $BudgetData = new BudgetData();
 	// $BudgetData->StartDT = $startDT;
 	// $BudgetData->EndDT = $endDT;
