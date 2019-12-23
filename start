@@ -3,4 +3,7 @@
 # To start the app run: ./start
 
 # Spin up a PHP web server on a project directory
+
+# error_log(print_r('endDT', true));
+
 php -S localhost:8081;

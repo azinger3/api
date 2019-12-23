@@ -364,6 +364,27 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
 });
 
 
+$app->post('/budget/average/monthly/snapshot', function ($request, $response, $args) {
+	$queryString = $request->getQueryParams();
+
+	$startDT = $queryString['StartDT'];
+	$endDT = $queryString['EndDT'];
+
+	if (is_null($startDT)) {
+		$startDT = year_begin_get(date("Y-m-01"));
+		$endDT = date('Y-m-01', strtotime("+1 month", strtotime(date("Y-m-01"))));
+	}
+
+	$BudgetData = new BudgetData();
+	$BudgetData->StartDT = $startDT;
+	$BudgetData->EndDT = $endDT;
+	$result = $BudgetData->BudgetAverageMonthlySnapshotGenerate();
+
+	header("Content-Type: application/json");
+	return json_encode($result, JSON_PRETTY_PRINT);
+});
+
+
 $app->put('/budget/transaction/{transactionid}', function ($request, $response, $args) {
 	$transactionID = $args["transactionid"];
 
