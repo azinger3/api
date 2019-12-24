@@ -386,27 +386,14 @@ $app->post('/budget/average/snapshot', function ($request, $response, $args) {
 
 
 $app->post('/budget/average/snapshot/refresh', function ($request, $response, $args) {
-	// $queryString = $request->getQueryParams();
-
-	// $startDT = $queryString['StartDT'];
-	// $endDT = $queryString['EndDT'];
-
-	// if (is_null($startDT)) {
-	//$startDT = year_begin_get(date("Y-m-01"));
-	
-	// }
-
-	//$startDT->add(new DateInterval('P1M'));
-	//echo $date->format('Y-m-d');
-
 	$baseDT = '2016-04-01';
 	$basePartDT = explode('-', $baseDT);
-	$baseYear = $basePartDT[0];
+	$baseYear = intval($basePartDT[0]);
 	$baseMonth = $basePartDT[1];
 
 	$currentDT = date('Y-m-01', strtotime("+1 month", strtotime(date("Y-m-01"))));
 	$currentPartDT = explode('-', $currentDT);
-	$currentYear = $currentPartDT[0];
+	$currentYear = intval($currentPartDT[0]);
 	$currentMonth = $currentPartDT[1];
 
 	$maxMonths = 12;
@@ -436,14 +423,26 @@ $app->post('/budget/average/snapshot/refresh', function ($request, $response, $a
 	error_log(print_r('maxYears', true));
 	error_log(print_r($maxYears, true));
 
+	// Seed EndDT
+	$baseDT = date('Y-m-01', strtotime("+1 month", strtotime($baseDT)));
+
 	for ($i = 1; $i <= $maxYears; $i++) {
 		// magic
 		error_log(print_r('year '.$i, true));
+		error_log(print_r('baseYear '.$baseYear, true));
 
 		for ($j = 1; $j <= $maxMonths; $j++) {
 			// magic
-			error_log(print_r('month '.$j, true));
+			if ($baseDT <= $currentDT) {
+				error_log(print_r('month '.$j, true));
+				error_log(print_r('startDT '.$baseYear.'-04-01', true));
+				error_log(print_r('endDT '.$baseDT, true));
+			}
+			
+			$baseDT = date('Y-m-01', strtotime("+1 month", strtotime($baseDT)));
 		}
+
+		$baseYear++;
 	}
 
 	// $BudgetData = new BudgetData();
