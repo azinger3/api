@@ -386,72 +386,61 @@ $app->post('/budget/average/snapshot', function ($request, $response, $args) {
 
 
 $app->post('/budget/average/snapshot/refresh', function ($request, $response, $args) {
+	// Initalize
+	$BudgetData = new BudgetData();
+	$snapshotRefresh = array(); 
+
+	// Base Date
 	$baseDT = '2016-04-01';
 	$basePartDT = explode('-', $baseDT);
 	$baseYear = intval($basePartDT[0]);
-	$baseMonth = $basePartDT[1];
 
+	// Current Date
 	$currentDT = date('Y-m-01', strtotime("+1 month", strtotime(date("Y-m-01"))));
 	$currentPartDT = explode('-', $currentDT);
 	$currentYear = intval($currentPartDT[0]);
-	$currentMonth = $currentPartDT[1];
 
+	// Max Date
 	$maxMonths = 12;
 	$maxYears = ($currentYear - $baseYear);
-
-	error_log(print_r('baseDT', true));
-	error_log(print_r($baseDT, true));
-
-	error_log(print_r('baseYear', true));
-	error_log(print_r($baseYear, true));
-
-	error_log(print_r('baseMonth', true));
-	error_log(print_r($baseMonth, true));
-
-	error_log(print_r('currentDT', true));
-	error_log(print_r($currentDT, true));
-
-	error_log(print_r('currentYear', true));
-	error_log(print_r($currentYear, true));
-
-	error_log(print_r('currentMonth', true));
-	error_log(print_r($currentMonth, true));
-
-	error_log(print_r('maxMonths', true));
-	error_log(print_r($maxMonths, true));
-
-	error_log(print_r('maxYears', true));
-	error_log(print_r($maxYears, true));
 
 	// Seed EndDT
 	$baseDT = date('Y-m-01', strtotime("+1 month", strtotime($baseDT)));
 
-	for ($i = 1; $i <= $maxYears; $i++) {
-		// magic
-		error_log(print_r('year '.$i, true));
-		error_log(print_r('baseYear '.$baseYear, true));
+	// Seed Index
+	$x = 0;
 
+	// Get Snapshot List
+	for ($i = 1; $i <= $maxYears; $i++) {
 		for ($j = 1; $j <= $maxMonths; $j++) {
-			// magic
+			// Add to List 
 			if ($baseDT <= $currentDT) {
-				error_log(print_r('month '.$j, true));
-				error_log(print_r('startDT '.$baseYear.'-04-01', true));
-				error_log(print_r('endDT '.$baseDT, true));
+				$snapshotRefresh[$x]['StartDT']= $baseYear.'-04-01';
+				$snapshotRefresh[$x]['EndDT']= $baseDT;
+
+				$x++;
 			}
 			
-			$baseDT = date('Y-m-01', strtotime("+1 month", strtotime($baseDT)));
+			// Increment by 1 Month
+			$baseDT = date('Y-m-01', strtotime('+1 month', strtotime($baseDT)));
 		}
 
+		// Increment by 1 Year
 		$baseYear++;
 	}
 
-	// $BudgetData = new BudgetData();
-	// $BudgetData->StartDT = $startDT;
-	// $BudgetData->EndDT = $endDT;
-	// $result = $BudgetData->BudgetAverageMonthlySnapshotGenerate();
+	// Execute
+	foreach ($snapshotRefresh as $snapshot) {
+		error_log(print_r('Refresh - Budget Average Monthly Snapshot - CALL BudgetAverageMonthlySnapshotGenerate(StartDT='.$snapshot['StartDT'].', EndDT='.$snapshot['EndDT'].')', true));
 
+		$BudgetData->StartDT = $snapshot['StartDT'];
+		$BudgetData->EndDT = $snapshot['EndDT'];
+		$result = $BudgetData->BudgetAverageMonthlySnapshotGenerate();
+	}
+
+	// Result
 	header("Content-Type: application/json");
-	return json_encode('', JSON_PRETTY_PRINT);
+	return json_encode($result, JSON_PRETTY_PRINT);
 });
 
 
