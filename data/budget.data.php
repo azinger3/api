@@ -390,6 +390,26 @@ class BudgetData extends BudgetModel
 		}
 	}
 
+	public function BudgetAverageMonthlySnapshotGet()
+	{
+		try {
+			$database = new Database();
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$statement = $database->prepare("CALL BudgetAverageMonthlySnapshotGet()");
+			$statement->execute();
+
+			$statement->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+			$result = $statement->fetchAll();
+
+			$database = null;
+
+			return $result;
+		} catch (PDOException $exception) {
+			die($exception->getMessage());
+		}
+	}
+
 	public function BudgetAverageMonthlySnapshotGenerate()
 	{
 		try {

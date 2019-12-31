@@ -215,6 +215,15 @@ $app->get('/budget/average', function ($request, $response, $args) {
 });
 
 
+$app->get('/budget/average/snapshot', function ($request, $response, $args) {
+	$BudgetData = new BudgetData();
+	$result = $BudgetData->BudgetAverageMonthlySnapshotGet();
+
+	header("Content-Type: application/json");
+	return json_encode($result, JSON_PRETTY_PRINT);
+});
+
+
 $app->get('/budget/breakdown', function ($request, $response, $args) {
 	$queryString = $request->getQueryParams();
 
