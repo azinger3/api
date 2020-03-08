@@ -399,6 +399,14 @@ $app->post('/budget/transaction/queue', function ($request, $response, $args) {
 	return json_encode($result, JSON_PRETTY_PRINT);
 });
 
+$app->post('/budget/transaction/queue/process', function ($request, $response, $args) {
+	$BudgetData = new BudgetData();
+	$result = $BudgetData->TransactionQueueProcess();
+
+	header("Content-Type: application/json");
+	return json_encode("testme", JSON_PRETTY_PRINT);
+});
+
 
 $app->post('/budget/average/snapshot', function ($request, $response, $args) {
 	$queryString = $request->getQueryParams();
