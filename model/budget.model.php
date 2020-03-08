@@ -44,6 +44,7 @@ class BudgetModel
 	private $TransactionTypeID;
 	private $TransactionNumber;
 	private $TransactionDT;
+	private $QueueID;
 
 	// General
 	private $Keyword;

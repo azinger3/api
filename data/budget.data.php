@@ -642,6 +642,34 @@ class BudgetData extends BudgetModel
 		}
 	}
 
+	public function TransactionQueueInsert()
+	{
+		try {
+			$database = new Database();
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$statement = $database->prepare("CALL TransactionQueueInsert(:QueueID,:TransactionTypeID,:TransactionNumber,:TransactionDT,:BudgetCategoryID,:Amount,:Description,:Note)");
+			$statement->bindParam(':QueueID', $this->QueueID, PDO::PARAM_STR);
+			$statement->bindParam(':TransactionTypeID', $this->TransactionTypeID, PDO::PARAM_INT);
+			$statement->bindParam(':TransactionNumber', $this->TransactionNumber, PDO::PARAM_STR);
+			$statement->bindParam(':TransactionDT', $this->TransactionDT, PDO::PARAM_STR);
+			$statement->bindParam(':BudgetCategoryID', $this->BudgetCategoryID, PDO::PARAM_INT);
+			$statement->bindParam(':Amount', $this->Amount, PDO::PARAM_STR);
+			$statement->bindParam(':Description', $this->Description, PDO::PARAM_STR);
+			$statement->bindParam(':Note', $this->Note, PDO::PARAM_STR);
+
+			$statement->execute();
+
+			$count = $statement->rowCount();
+
+			$database = null;
+
+			return $count;
+		} catch (PDOException $exception) {
+			die($exception->getMessage());
+		}
+	}
+
 	public function TransactionUpdate()
 	{
 		try {

@@ -372,6 +372,33 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
 	return json_encode($result, JSON_PRETTY_PRINT);
 });
 
+$app->post('/budget/transaction/queue', function ($request, $response, $args) {
+	$data = $request->getParsedBody();
+
+	$queueID = $data["QueueID"];
+	$transactionTypeID = $data["TransactionTypeID"];
+	$transactionNumber = $data["TransactionNumber"];
+	$transactionDT = $data["TransactionDT"];
+	$budgetCategoryID = $data["BudgetCategoryID"];
+	$amount = $data["Amount"];
+	$description = $data["Description"];
+	$note = $data["Note"];
+
+	$BudgetData = new BudgetData();
+	$BudgetData->QueueID = $queueID;
+	$BudgetData->TransactionTypeID = $transactionTypeID;
+	$BudgetData->TransactionNumber = $transactionNumber;
+	$BudgetData->TransactionDT = $transactionDT;
+	$BudgetData->BudgetCategoryID = $budgetCategoryID;
+	$BudgetData->Amount = $amount;
+	$BudgetData->Description = $description;
+	$BudgetData->Note = $note;
+	$result = $BudgetData->TransactionQueueInsert();
+
+	header("Content-Type: application/json");
+	return json_encode($result, JSON_PRETTY_PRINT);
+});
+
 
 $app->post('/budget/average/snapshot', function ($request, $response, $args) {
 	$queryString = $request->getQueryParams();
