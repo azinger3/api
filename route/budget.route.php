@@ -372,6 +372,7 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
 	return json_encode($result, JSON_PRETTY_PRINT);
 });
 
+
 $app->post('/budget/transaction/queue', function ($request, $response, $args) {
 	$data = $request->getParsedBody();
 
@@ -399,12 +400,13 @@ $app->post('/budget/transaction/queue', function ($request, $response, $args) {
 	return json_encode($result, JSON_PRETTY_PRINT);
 });
 
+
 $app->post('/budget/transaction/queue/process', function ($request, $response, $args) {
 	$BudgetData = new BudgetData();
 	$result = $BudgetData->TransactionQueueProcess();
 
 	header("Content-Type: application/json");
-	return json_encode("testme", JSON_PRETTY_PRINT);
+	return json_encode($result, JSON_PRETTY_PRINT);
 });
 
 
@@ -432,7 +434,7 @@ $app->post('/budget/average/snapshot', function ($request, $response, $args) {
 $app->post('/budget/average/snapshot/refresh', function ($request, $response, $args) {
 	// Initalize
 	$BudgetData = new BudgetData();
-	$snapshotRefresh = array(); 
+	$snapshotRefresh = array();
 
 	// Base Date
 	$baseDT = '2016-04-01';
@@ -459,12 +461,12 @@ $app->post('/budget/average/snapshot/refresh', function ($request, $response, $a
 		for ($j = 1; $j <= $maxMonths; $j++) {
 			// Add to List 
 			if ($baseDT <= $currentDT) {
-				$snapshotRefresh[$x]['StartDT']= $baseYear.'-04-01';
-				$snapshotRefresh[$x]['EndDT']= $baseDT;
+				$snapshotRefresh[$x]['StartDT'] = $baseYear . '-04-01';
+				$snapshotRefresh[$x]['EndDT'] = $baseDT;
 
 				$x++;
 			}
-			
+
 			// Increment by 1 Month
 			$baseDT = date('Y-m-01', strtotime('+1 month', strtotime($baseDT)));
 		}
@@ -475,7 +477,7 @@ $app->post('/budget/average/snapshot/refresh', function ($request, $response, $a
 
 	// Execute
 	foreach ($snapshotRefresh as $snapshot) {
-		error_log(print_r('Refresh - Budget Average Monthly Snapshot - CALL BudgetAverageMonthlySnapshotGenerate(StartDT='.$snapshot['StartDT'].', EndDT='.$snapshot['EndDT'].')', true));
+		error_log(print_r('Refresh - Budget Average Monthly Snapshot - CALL BudgetAverageMonthlySnapshotGenerate(StartDT=' . $snapshot['StartDT'] . ', EndDT=' . $snapshot['EndDT'] . ')', true));
 
 		$BudgetData->StartDT = $snapshot['StartDT'];
 		$BudgetData->EndDT = $snapshot['EndDT'];
