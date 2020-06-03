@@ -440,15 +440,19 @@ $app->post('/budget/average/snapshot/refresh', function ($request, $response, $a
 	$baseDT = '2016-04-01';
 	$basePartDT = explode('-', $baseDT);
 	$baseYear = intval($basePartDT[0]);
+	$baseMonth = date('m', strtotime($baseDT));
 
 	// Current Date
 	$currentDT = date('Y-m-01', strtotime("+1 month", strtotime(date("Y-m-01"))));
 	$currentPartDT = explode('-', $currentDT);
 	$currentYear = intval($currentPartDT[0]);
+	$currentMonth = date('m', strtotime($currentDT));
 
 	// Max Date
 	$maxMonths = 12;
-	$maxYears = ($currentYear - $baseYear);
+	$maxMonthsTotal = (($currentYear - $baseYear) * $maxMonths) + ($currentMonth - $baseMonth);
+	$maxYearsDiff = $maxMonthsTotal / $maxMonths;
+	$maxYears = ceil($maxYearsDiff);
 
 	// Seed EndDT
 	$baseDT = date('Y-m-01', strtotime("+1 month", strtotime($baseDT)));
