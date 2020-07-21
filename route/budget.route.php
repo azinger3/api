@@ -374,8 +374,11 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
 
 $app->post('/budget/transaction/sms', function ($request, $response, $args) {
 	$data = $request->getParsedBody();
+	$contentType = $request->getContentType();
 
 	error_log(print_r($data, true));
+	error_log(print_r('content type!!!', true));
+	error_log(print_r($contentType, true));
 
 	header("Content-Type: application/xml");
 	return "<Response><Message>Hello earth!</Message></Response>";
