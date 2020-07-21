@@ -378,7 +378,7 @@ $app->post('/budget/transaction/sms', function ($request, $response, $args) {
 	error_log(print_r($data, true));
 
 	header("Content-Type: application/xml");
-	return "<Response>hello twilio!</Response>";
+	return "<Response><Message>Hello earth!</Message></Response>";
 });
 
 
