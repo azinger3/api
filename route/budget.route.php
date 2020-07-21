@@ -453,7 +453,7 @@ $app->post('/budget/transaction/sms', function ($request, $response, $args) {
 	$BudgetData->NumMedia = $numMedia;
 	$BudgetData->NumSegments = $numSegments;
 	$BudgetData->ApiVersion = $apiVersion;
-	$result = $BudgetData->TransactionQueueInsert();
+	$result = $BudgetData->TransactionSmsInsert();
 
 	header("Content-Type: application/xml");
 	return "<Response><Message>Thanks! xoxo</Message></Response>";
