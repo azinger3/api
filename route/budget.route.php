@@ -375,8 +375,8 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
 $app->post('/budget/transaction/sms', function ($request, $response, $args) {
 	$data = $request->getParsedBody();
 
-	$sender = $data["Sender"];
-	$receiver = $data["Receiver"];
+	$sender = $data["From"];
+	$receiver = $data["To"];
 	$body = $data["Body"];
 	$smsSid = $data["SmsSid"];
 	$smsMessageSid = $data["SmsMessageSid"];
