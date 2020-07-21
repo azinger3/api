@@ -58,4 +58,25 @@ class BudgetModel
 	private $ModifyDT;
 	private $ModifyBy;
 	private $ActiveFlg;
+
+	// SMS
+	private $Sender;
+	private $Receiver;
+	private $Body;
+	private $SmsSid;
+	private $SmsMessageSid;
+	private $SmsStatus;
+	private $AccountSid;
+	private $MessageSid;
+	private $FromCity;
+	private $FromState;
+	private $FromZip;
+	private $FromCountry;
+	private $ToState;
+	private $ToCity;
+	private $ToZip;
+	private $ToCountry;
+	private $NumMedia;
+	private $NumSegments;
+	private $ApiVersion;
 }
