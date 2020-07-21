@@ -372,6 +372,15 @@ $app->post('/budget/transaction', function ($request, $response, $args) {
 	return json_encode($result, JSON_PRETTY_PRINT);
 });
 
+$app->post('/budget/transaction/sms', function ($request, $response, $args) {
+	$data = $request->getParsedBody();
+
+	error_log(print_r($data, true));
+
+	header("Content-Type: application/xml");
+	return "<Response>hello twilio!</Response>";
+});
+
 
 $app->post('/budget/transaction/queue', function ($request, $response, $args) {
 	$data = $request->getParsedBody();
