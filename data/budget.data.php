@@ -642,45 +642,6 @@ class BudgetData extends BudgetModel
 		}
 	}
 
-	public function TransactionSmsInsert()
-	{
-		try {
-			$database = new Database();
-			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-			$statement = $database->prepare("CALL TransactionSmsInsert(:Sender,:Receiver,:Body,:SmsSid,:SmsMessageSid,:SmsStatus,:AccountSid,:MessageSid,:FromCity,:FromState,:FromZip,:FromCountry,:ToState,:ToCity,:ToZip,:ToCountry,:NumMedia,:NumSegments,:ApiVersion)");
-			$statement->bindParam(':Sender', $this->Sender, PDO::PARAM_STR);
-			$statement->bindParam(':Receiver', $this->Receiver, PDO::PARAM_INT);
-			$statement->bindParam(':Body', $this->Body, PDO::PARAM_STR);
-			$statement->bindParam(':SmsSid', $this->SmsSid, PDO::PARAM_STR);
-			$statement->bindParam(':SmsMessageSid', $this->SmsMessageSid, PDO::PARAM_INT);
-			$statement->bindParam(':SmsStatus', $this->SmsStatus, PDO::PARAM_STR);
-			$statement->bindParam(':AccountSid', $this->AccountSid, PDO::PARAM_STR);
-			$statement->bindParam(':MessageSid', $this->MessageSid, PDO::PARAM_STR);
-			$statement->bindParam(':FromCity', $this->FromCity, PDO::PARAM_STR);
-			$statement->bindParam(':FromState', $this->FromState, PDO::PARAM_STR);
-			$statement->bindParam(':FromZip', $this->FromZip, PDO::PARAM_STR);
-			$statement->bindParam(':FromCountry', $this->FromCountry, PDO::PARAM_STR);
-			$statement->bindParam(':ToState', $this->ToState, PDO::PARAM_STR);
-			$statement->bindParam(':ToCity', $this->ToCity, PDO::PARAM_STR);
-			$statement->bindParam(':ToZip', $this->ToZip, PDO::PARAM_STR);
-			$statement->bindParam(':ToCountry', $this->ToCountry, PDO::PARAM_STR);
-			$statement->bindParam(':NumMedia', $this->NumMedia, PDO::PARAM_STR);
-			$statement->bindParam(':NumSegments', $this->NumSegments, PDO::PARAM_STR);
-			$statement->bindParam(':ApiVersion', $this->ApiVersion, PDO::PARAM_STR);
-
-			$statement->execute();
-
-			$count = $statement->rowCount();
-
-			$database = null;
-
-			return $count;
-		} catch (PDOException $exception) {
-			die($exception->getMessage());
-		}
-	}
-
 	public function TransactionQueueInsert()
 	{
 		try {
@@ -716,6 +677,45 @@ class BudgetData extends BudgetModel
 			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			$statement = $database->prepare("CALL TransactionQueueProcess()");
+			$statement->execute();
+
+			$count = $statement->rowCount();
+
+			$database = null;
+
+			return $count;
+		} catch (PDOException $exception) {
+			die($exception->getMessage());
+		}
+	}
+
+	public function TransactionSmsInsert()
+	{
+		try {
+			$database = new Database();
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$statement = $database->prepare("CALL TransactionSmsInsert(:Sender,:Receiver,:Body,:SmsSid,:SmsMessageSid,:SmsStatus,:AccountSid,:MessageSid,:FromCity,:FromState,:FromZip,:FromCountry,:ToState,:ToCity,:ToZip,:ToCountry,:NumMedia,:NumSegments,:ApiVersion)");
+			$statement->bindParam(':Sender', $this->Sender, PDO::PARAM_STR);
+			$statement->bindParam(':Receiver', $this->Receiver, PDO::PARAM_INT);
+			$statement->bindParam(':Body', $this->Body, PDO::PARAM_STR);
+			$statement->bindParam(':SmsSid', $this->SmsSid, PDO::PARAM_STR);
+			$statement->bindParam(':SmsMessageSid', $this->SmsMessageSid, PDO::PARAM_INT);
+			$statement->bindParam(':SmsStatus', $this->SmsStatus, PDO::PARAM_STR);
+			$statement->bindParam(':AccountSid', $this->AccountSid, PDO::PARAM_STR);
+			$statement->bindParam(':MessageSid', $this->MessageSid, PDO::PARAM_STR);
+			$statement->bindParam(':FromCity', $this->FromCity, PDO::PARAM_STR);
+			$statement->bindParam(':FromState', $this->FromState, PDO::PARAM_STR);
+			$statement->bindParam(':FromZip', $this->FromZip, PDO::PARAM_STR);
+			$statement->bindParam(':FromCountry', $this->FromCountry, PDO::PARAM_STR);
+			$statement->bindParam(':ToState', $this->ToState, PDO::PARAM_STR);
+			$statement->bindParam(':ToCity', $this->ToCity, PDO::PARAM_STR);
+			$statement->bindParam(':ToZip', $this->ToZip, PDO::PARAM_STR);
+			$statement->bindParam(':ToCountry', $this->ToCountry, PDO::PARAM_STR);
+			$statement->bindParam(':NumMedia', $this->NumMedia, PDO::PARAM_STR);
+			$statement->bindParam(':NumSegments', $this->NumSegments, PDO::PARAM_STR);
+			$statement->bindParam(':ApiVersion', $this->ApiVersion, PDO::PARAM_STR);
+
 			$statement->execute();
 
 			$count = $statement->rowCount();
