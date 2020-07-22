@@ -460,6 +460,15 @@ $app->post('/budget/transaction/sms', function ($request, $response, $args) {
 });
 
 
+$app->post('/budget/transaction/sms/process', function ($request, $response, $args) {
+	$BudgetData = new BudgetData();
+	$result = $BudgetData->TransactionSmsProcess();
+
+	header("Content-Type: application/json");
+	return json_encode($result, JSON_PRETTY_PRINT);
+});
+
+
 $app->post('/budget/average/snapshot', function ($request, $response, $args) {
 	$queryString = $request->getQueryParams();
 

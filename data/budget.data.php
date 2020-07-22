@@ -728,6 +728,25 @@ class BudgetData extends BudgetModel
 		}
 	}
 
+	public function TransactionSmsProcess()
+	{
+		try {
+			$database = new Database();
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$statement = $database->prepare("CALL TransactionSmsProcess()");
+			$statement->execute();
+
+			$count = $statement->rowCount();
+
+			$database = null;
+
+			return $count;
+		} catch (PDOException $exception) {
+			die($exception->getMessage());
+		}
+	}
+
 	public function TransactionUpdate()
 	{
 		try {
