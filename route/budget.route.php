@@ -263,6 +263,20 @@ $app->get('/budget/transaction/description', function ($request, $response, $arg
 });
 
 
+$app->get('/budget/transaction/balance', function ($request, $response, $args) {
+	$queryString = $request->getQueryParams();
+
+	$keyword = $queryString['Keyword'];
+
+	$BudgetData = new BudgetData();
+	$BudgetData->Keyword = $keyword;
+	$result = $BudgetData->TransactionBalanceByDescriptionGet();
+
+	header("Content-Type: application/json");
+	return json_encode($result, JSON_PRETTY_PRINT);
+});
+
+
 $app->get('/budget/transaction/recent', function ($request, $response, $args) {
 	$BudgetData = new BudgetData();
 	$result = $BudgetData->TransactionRecentGet();

@@ -498,6 +498,28 @@ class BudgetData extends BudgetModel
 		}
 	}
 
+	public function TransactionBalanceByDescriptionGet()
+	{
+		try {
+			$database = new Database();
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$statement = $database->prepare("CALL TransactionBalanceByDescriptionGet(:Keyword)");
+			$statement->bindParam(':Keyword', $this->Keyword, PDO::PARAM_STR);
+
+			$statement->execute();
+
+			$statement->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+			$result = $statement->fetchAll();
+
+			$database = null;
+
+			return $result;
+		} catch (PDOException $exception) {
+			die($exception->getMessage());
+		}
+	}
+
 	public function TransactionRecentGet()
 	{
 		try {
